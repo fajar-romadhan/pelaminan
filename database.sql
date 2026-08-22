@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS production_queue;
 DROP TABLE IF EXISTS receipts;
 DROP TABLE IF EXISTS invoices;
 DROP TABLE IF EXISTS payments;
-DROP TABLE IF EXISTS editor_designs;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS carts;
+DROP TABLE IF EXISTS editor_designs;
 DROP TABLE IF EXISTS extra_items;
 DROP TABLE IF EXISTS shipping_rates;
 DROP TABLE IF EXISTS product_variants;
@@ -17,9 +17,8 @@ DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS settings;
 DROP TABLE IF EXISTS password_resets;
+DROP TABLE IF EXISTS activity_logs;
 DROP TABLE IF EXISTS users;
-
-SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -87,6 +86,37 @@ CREATE TABLE shipping_rates (
   status ENUM('Aktif','Tidak Aktif') DEFAULT 'Aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE extra_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(160) NOT NULL,
+  category VARCHAR(80) NOT NULL,
+  price DECIMAL(14,2) NOT NULL DEFAULT 0,
+  image_url VARCHAR(255) NULL,
+  description TEXT NULL,
+  status ENUM('Aktif','Tidak Aktif') DEFAULT 'Aktif',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE editor_designs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  product_id INT NOT NULL,
+  variant_id INT NULL,
+  variant_name VARCHAR(120) NULL,
+  title VARCHAR(160) NOT NULL,
+  size VARCHAR(60) DEFAULT 'Medium',
+  color VARCHAR(20) DEFAULT '#800020',
+  sofa VARCHAR(120),
+  flower VARCHAR(120),
+  kotak VARCHAR(120),
+  notes TEXT,
+  extra_items_json TEXT NULL,
+  extra_price DECIMAL(14,2) DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE carts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
@@ -100,17 +130,6 @@ CREATE TABLE carts (
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
   FOREIGN KEY (design_id) REFERENCES editor_designs(id) ON DELETE SET NULL,
   FOREIGN KEY (variant_id) REFERENCES product_variants(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE extra_items (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(160) NOT NULL,
-  category VARCHAR(80) NOT NULL,
-  price DECIMAL(14,2) NOT NULL DEFAULT 0,
-  image_url VARCHAR(255) NULL,
-  description TEXT NULL,
-  status ENUM('Aktif','Tidak Aktif') DEFAULT 'Aktif',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE orders (
@@ -161,7 +180,8 @@ CREATE TABLE orders (
   schedule_end DATE NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT,
+  FOREIGN KEY (design_id) REFERENCES editor_designs(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE payments (
@@ -246,26 +266,6 @@ CREATE TABLE notifications (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE editor_designs (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  product_id INT NOT NULL,
-  variant_id INT NULL,
-  variant_name VARCHAR(120) NULL,
-  title VARCHAR(160) NOT NULL,
-  size VARCHAR(60) DEFAULT 'Medium',
-  color VARCHAR(20) DEFAULT '#800020',
-  sofa VARCHAR(120),
-  flower VARCHAR(120),
-  kotak VARCHAR(120),
-  notes TEXT,
-  extra_items_json TEXT NULL,
-  extra_price DECIMAL(14,2) DEFAULT 0,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 CREATE TABLE activity_logs (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
@@ -345,3 +345,5 @@ INSERT INTO orders(order_code,user_id,receiver_name,receiver_phone,delivery_addr
 INSERT INTO payments(order_id,type,method,amount,status,paid_at) VALUES
 (1,'dp','Virtual Account BRI',4250000,'berhasil',NOW()),
 (2,'dp','Virtual Account BRI',1850000,'berhasil',NOW());
+
+SET FOREIGN_KEY_CHECKS = 1;
