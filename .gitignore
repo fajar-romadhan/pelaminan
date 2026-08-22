@@ -1,0 +1,38 @@
+# ============================================================
+# .gitignore - Pelaminan Family
+# ============================================================
+
+# ---- File konfigurasi lokal (JANGAN di-push ke GitHub) ----
+config/database.php
+
+# ---- File upload user (besar, tidak perlu di-repo) ----
+# CATATAN: uploads/ dikecualikan agar foto produk tidak memenuhi repo.
+# Upload foto produk dilakukan manual via cPanel File Manager.
+# uploads/
+
+# ---- File sementara & scratch ----
+scratch/
+
+# ---- File arsip / zip ----
+*.zip
+*.tar.gz
+*.rar
+
+# ---- File log ----
+*.log
+
+# ---- OS & Editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# ---- Dependency managers (tidak ada di proyek ini tapi jaga-jaga) ----
+/vendor/
+node_modules/
+
+# ---- File environment lokal ----
+.env
+.env.local
