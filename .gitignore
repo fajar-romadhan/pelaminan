@@ -18,8 +18,12 @@ scratch/
 *.tar.gz
 *.rar
 
-# ---- File log ----
+# ---- File log & SSH Keys ----
 *.log
+id_rsa
+id_rsa*
+*.pem
+*.pub
 
 # ---- OS & Editor ----
 .DS_Store
