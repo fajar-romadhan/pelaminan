@@ -809,6 +809,19 @@
   - Memperbarui skema [database.sql](file:///c:/xampp/htdocs/pelaminan/database.sql) dengan penambahan tabel `password_resets`.
 - **Hasil**: Alur Lupa Password & Reset Password untuk Customer maupun Admin berfungsi 100% lancar, aman, presisi waktu, dan memiliki desain antarmuka mewah yang selaras.
 
+#### 104. Deployment ke Hosting ArenHost & Integrasi GitHub ([.cpanel.yml](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml), [.htaccess](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.htaccess), [config/database.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/database.php), [database.sql](file:///e:/JOB/BANTU/NURTASAH/pelaminan/database.sql))
+- **Item Pekerjaan**:
+  - Menginisialisasi repositori Git dan menghubungkan ke remote GitHub: `https://github.com/fajar-romadhan/pelaminan.git`.
+  - Mengonfigurasi file `.gitignore` untuk melindungi file sensitif kredensial (`config/database.php`), file dump, dan SSH keys.
+  - Membuat script auto-deploy cPanel [`.cpanel.yml`](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml) yang terhubung ke target `/home/pelamina/public_html/`.
+  - Membuat file konfigurasi server [`.htaccess`](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.htaccess) untuk proteksi file sensitif, kompresi GZIP, dan browser caching.
+  - Memperbaiki [database.sql](file:///e:/JOB/BANTU/NURTASAH/pelaminan/database.sql) dengan menghapus sintaks `CREATE DATABASE` / `USE` (karena batasan hak akses shared hosting) serta menata ulang urutan pembuatan tabel `editor_designs` sebelum `carts` dan `orders` agar terbebas dari kendala *Foreign Key Constraint*.
+  - Mengimpor seluruh 19 tabel database ke MySQL cPanel database `pelamina_pelaminan` dengan user `pelamina_id_rsa`.
+  - Mengonfigurasi kredensial koneksi produksi di [config/database.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/database.php).
+  - Melakukan build dan ekstraksi paket hosting `pelaminan_hosting_ready.zip` ke direktori `public_html/` server ArenHost.
+  - Domain target: `pelaminanfamily.my.id` (IP Server: `195.88.211.130`).
+- **Hasil**: Seluruh berkas website, database MySQL, dan konfigurasi backend di server ArenHost telah 100% tuntas, rapi, dan siap beroperasi saat aktivasi registrar domain selesai.
+
 ---
 
 ## 🛠️ Ringkasan Struktur Modul Utama
