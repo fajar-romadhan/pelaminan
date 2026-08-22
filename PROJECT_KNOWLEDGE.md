@@ -822,22 +822,18 @@
   - Domain target: `pelaminanfamily.my.id` (IP Server: `195.88.211.130`).
 - **Hasil**: Seluruh berkas website, database MySQL, dan konfigurasi backend di server ArenHost telah 100% tuntas, rapi, dan siap beroperasi saat aktivasi registrar domain selesai.
 
+#### 105. Analisis DNS Domain Pending & Pembuatan Catatan Hosting ([HOSTING_NOTES.md](file:///e:/JOB/BANTU/NURTASAH/pelaminan/HOSTING_NOTES.md))
+- **Item Pekerjaan**:
+  - Melakukan diagnosis menyeluruh terkait DNS domain `pelaminanfamily.my.id` melalui `nslookup` (DNS ISP, Google 8.8.8.8, Cloudflare 1.1.1.1) dan inspeksi cPanel Zone Editor.
+  - Memverifikasi bahwa DNS Zone di cPanel ArenHost telah 100% tepat (A Record `195.88.211.130`, CNAME `www`, `mail`, `ftp`, MX Record).
+  - Mengidentifikasi status domain di ArenHost Client Area berstatus 🟡 **Pending** karena baru didaftarkan pada 22 Agustus 2026 dan masih dalam proses validasi registri PANDI (.id).
+  - Membuat berkas dokumentasi lengkap [[HOSTING_NOTES.md](file:///e:/JOB/BANTU/NURTASAH/pelaminan/HOSTING_NOTES.md)] yang memuat info cPanel, IP server, status domain, panduan bypass via file hosts Windows untuk testing lokal, dan checklist verifikasi pasca aktivasi domain.
+- **Hasil**: Seluruh informasi teknis hosting dan panduan aktivasi domain terdokumentasi rapi di repositori proyek.
+
 ---
 
 ## 🛠️ Ringkasan Struktur Modul Utama
 - **Website Utama**: `index.php`, `gallery.php`, `product.php`, `customization.php`, `checkout.php`, `order.php`, `my-orders.php`, `invoice.php`, `receipt.php`, `tracking.php`
 - **Panel Admin**: `admin/index.php`, `admin/orders.php`, `admin/products.php`, `admin/product-variants.php`, `admin/items.php`, `admin/production-calendar.php`, `admin/operational-report.php`, `admin/export-report-pdf.php`, `admin/notifications.php`
 - **Konfigurasi & Utility**: `config/database.php`, `config/helpers.php`, `assets/css/style.css`, `assets/js/delivery-map.js`, `assets/js/checkout-shipping.js`
-- **Dokumentasi**: `PROJECT_KNOWLEDGE.md`, `DOKUMEN_HALAMAN_SISTEM.md`
-
-
-
-
-
-
-
-
-
-
-
-
+- **Dokumentasi**: `PROJECT_KNOWLEDGE.md`, `DOKUMEN_HALAMAN_SISTEM.md`, `HOSTING_NOTES.md`
