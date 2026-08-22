@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS pelaminan_family CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE pelaminan_family;
-
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS notifications;
