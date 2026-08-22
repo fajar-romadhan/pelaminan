@@ -12,7 +12,7 @@
 deployment:
   tasks:
     # Tentukan path tujuan deploy (public_html)
-    - export DEPLOYPATH=/home/CPANEL_USERNAME/public_html/
+    - export DEPLOYPATH=/home/pelamina/public_html/
 
     # Salin seluruh file PHP utama (root)
     - /bin/cp checkout.php $DEPLOYPATH
