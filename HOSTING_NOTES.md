@@ -107,7 +107,8 @@ Link monitoring:
 
 ## 📝 Checklist Setelah Domain Aktif
 
-- [ ] Hapus entry pelaminanfamily.my.id dari file hosts Windows
-- [ ] Install SSL Certificate (Let's Encrypt) via cPanel
-- [ ] Verifikasi https://pelaminanfamily.my.id bisa diakses
-- [ ] Test semua fitur: login, order, payment, dll.
+- [x] Aktivasi domain resmi PANDI selesai (Status: Active)
+- [x] Install SSL Certificate (Let's Encrypt) via cPanel (Status: Secured 🔒)
+- [x] Konfigurasi Force HTTPS & Auto-Detect BASE_URL
+- [x] Verifikasi https://pelaminanfamily.my.id bisa diakses (HTTP/1.1 200 OK)
+- [ ] Test fungsionalitas publik: login, order, payment, dll.
