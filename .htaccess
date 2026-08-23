@@ -13,6 +13,10 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Paksa HTTPS (SSL)
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     # Blokir akses langsung ke folder config
     RewriteRule ^config/ - [F,L]
 
