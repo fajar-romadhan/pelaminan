@@ -3,7 +3,12 @@
 date_default_timezone_set('Asia/Jakarta');
 
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/pelaminan');
+    $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+    if (strpos($scriptName, '/pelaminan/') === 0 || $scriptName === '/pelaminan') {
+        define('BASE_URL', '/pelaminan');
+    } else {
+        define('BASE_URL', '');
+    }
 }
 
 if (!defined('BASE_PATH')) {
