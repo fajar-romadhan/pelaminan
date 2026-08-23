@@ -838,6 +838,13 @@
   - Memverifikasi resolusi DNS pada Google DNS (`8.8.8.8`) mengarah ke IP `195.88.211.130`.
 - **Hasil**: Domain telah aktif resmi di registri nasional PANDI dan konfigurasi routing BASE_URL siap bekerja mulus di server live.
 
+#### 107. Penghubungan GitHub ke cPanel & Optimasi Skrip Auto-Deploy ([.cpanel.yml](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml))
+- **Item Pekerjaan**:
+  - Berhasil meng-clone repositori GitHub `https://github.com/fajar-romadhan/pelaminan.git` ke dalam cPanel Git™ Version Control (`/home/pelamina/repositories/pelaminan`).
+  - Mengubah visibilitas repositori GitHub menjadi **Public** sehingga proses clone dan update remote cPanel berjalan cepat tanpa batasan autentikasi non-interaktif.
+  - Memperbaiki berkas [`.cpanel.yml`](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml) dengan mengganti variabel `export DEPLOYPATH` menjadi path absolut langsung (`/home/pelamina/public_html/`) pada setiap baris tugas deployment agar dieksekusi 100% tuntas oleh subshell cPanel runner.
+- **Hasil**: GitHub dan cPanel Git Version Control terhubung 100% dan proses deploy ke `public_html/` siap dijalankan dengan sekali klik.
+
 ---
 
 ## 🛠️ Ringkasan Struktur Modul Utama
