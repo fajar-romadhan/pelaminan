@@ -1,4 +1,4 @@
-﻿# 📋 CATATAN HOSTING — Pelaminan Family
+# 📋 CATATAN HOSTING — Pelaminan Family
 **Tanggal**: 22 Agustus 2026 | **Pukul**: 23:00 WIB  
 **Pemilik Proyek**: Zainal Abidin Fikri  
 
@@ -27,7 +27,7 @@
 | **Tgl Registrasi** | Sabtu, 22 Agustus 2026 |
 | **Next Due** | Minggu, 22 Agustus 2027 |
 | **Auto Renew** | Enabled |
-| **Status Saat Ini** | 🟡 **PENDING** |
+| **Status Saat Ini** | 🟢 **ACTIVE** (Terdaftar Resmi PANDI 23-08-2026) |
 
 ---
 

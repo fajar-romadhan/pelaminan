@@ -830,6 +830,14 @@
   - Membuat berkas dokumentasi lengkap [[HOSTING_NOTES.md](file:///e:/JOB/BANTU/NURTASAH/pelaminan/HOSTING_NOTES.md)] yang memuat info cPanel, IP server, status domain, panduan bypass via file hosts Windows untuk testing lokal, dan checklist verifikasi pasca aktivasi domain.
 - **Hasil**: Seluruh informasi teknis hosting dan panduan aktivasi domain terdokumentasi rapi di repositori proyek.
 
+#### 106. Aktivasi Domain PANDI & Auto-Detect BASE_URL ([config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php), [HOSTING_NOTES.md](file:///e:/JOB/BANTU/NURTASAH/pelaminan/HOSTING_NOTES.md))
+- **Item Pekerjaan**:
+  - Melakukan diagnosis teknis langsung ke registri pusat PANDI (`https://rdap.pandi.id/rdap/domain/pelaminanfamily.my.id`).
+  - Domain `pelaminanfamily.my.id` dan `pempekmona.my.id` telah resmi diterbitkan oleh PANDI pada **23 Agustus 2026 pukul 19:45 WIB** (`2026-08-23T12:45:32Z`) dengan status 🟢 **ACTIVE** di client area ArenHost.
+  - Memperbarui konstanta `BASE_URL` di [config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php) agar otomatis mendeteksi apakah diakses di domain live (`''`) atau di localhost subfolder (`/pelaminan`), dan mem-push ke branch `main` GitHub.
+  - Memverifikasi resolusi DNS pada Google DNS (`8.8.8.8`) mengarah ke IP `195.88.211.130`.
+- **Hasil**: Domain telah aktif resmi di registri nasional PANDI dan konfigurasi routing BASE_URL siap bekerja mulus di server live.
+
 ---
 
 ## 🛠️ Ringkasan Struktur Modul Utama
