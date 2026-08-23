@@ -11,42 +11,14 @@
 
 deployment:
   tasks:
-    # Tentukan path tujuan deploy (public_html)
-    - export DEPLOYPATH=/home/pelamina/public_html/
-
-    # Salin seluruh file PHP utama (root)
-    - /bin/cp checkout.php $DEPLOYPATH
-    - /bin/cp customization.php $DEPLOYPATH
-    - /bin/cp forgot-password.php $DEPLOYPATH
-    - /bin/cp gallery.php $DEPLOYPATH
-    - /bin/cp index.php $DEPLOYPATH
-    - /bin/cp invoice.php $DEPLOYPATH
-    - /bin/cp login.php $DEPLOYPATH
-    - /bin/cp logout.php $DEPLOYPATH
-    - /bin/cp my-orders.php $DEPLOYPATH
-    - /bin/cp notifications.php $DEPLOYPATH
-    - /bin/cp order.php $DEPLOYPATH
-    - /bin/cp payment.php $DEPLOYPATH
-    - /bin/cp product.php $DEPLOYPATH
-    - /bin/cp receipt.php $DEPLOYPATH
-    - /bin/cp register.php $DEPLOYPATH
-    - /bin/cp reset-password.php $DEPLOYPATH
-    - /bin/cp tracking.php $DEPLOYPATH
-
-    # Salin folder-folder utama
-    - /bin/cp -R admin $DEPLOYPATH
-    - /bin/cp -R assets $DEPLOYPATH
-    - /bin/cp -R includes $DEPLOYPATH
-    - /bin/cp -R uploads $DEPLOYPATH
-
-    # Salin config (KECUALI database.php yang sudah ada di server)
-    - /bin/cp config/helpers.php ${DEPLOYPATH}config/
-    - /bin/cp config/settings.php ${DEPLOYPATH}config/
-
-    # Salin .htaccess
-    - /bin/cp .htaccess $DEPLOYPATH
-
-    # Set permission folder uploads agar bisa menerima upload foto
-    - /bin/chmod 755 ${DEPLOYPATH}uploads/
-    - /bin/chmod 755 ${DEPLOYPATH}uploads/products/
-    - /bin/chmod 755 ${DEPLOYPATH}uploads/payments/
+    - /bin/cp -rf checkout.php customization.php forgot-password.php gallery.php index.php invoice.php login.php logout.php my-orders.php notifications.php order.php payment.php product.php receipt.php register.php reset-password.php tracking.php /home/pelamina/public_html/
+    - /bin/cp -rf admin /home/pelamina/public_html/
+    - /bin/cp -rf assets /home/pelamina/public_html/
+    - /bin/cp -rf includes /home/pelamina/public_html/
+    - /bin/cp -rf uploads /home/pelamina/public_html/
+    - /bin/cp -rf config/helpers.php /home/pelamina/public_html/config/
+    - /bin/cp -rf config/settings.php /home/pelamina/public_html/config/
+    - /bin/cp -rf .htaccess /home/pelamina/public_html/
+    - /bin/chmod 755 /home/pelamina/public_html/uploads/
+    - /bin/chmod 755 /home/pelamina/public_html/uploads/products/
+    - /bin/chmod 755 /home/pelamina/public_html/uploads/payments/
