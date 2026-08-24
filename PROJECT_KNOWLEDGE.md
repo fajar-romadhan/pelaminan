@@ -843,7 +843,14 @@
   - Berhasil meng-clone repositori GitHub `https://github.com/fajar-romadhan/pelaminan.git` ke dalam cPanel Git™ Version Control (`/home/pelamina/repositories/pelaminan`).
   - Mengubah visibilitas repositori GitHub menjadi **Public** sehingga proses clone dan update remote cPanel berjalan cepat tanpa batasan autentikasi non-interaktif.
   - Memperbaiki berkas [`.cpanel.yml`](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml) dengan mengganti variabel `export DEPLOYPATH` menjadi path absolut langsung (`/home/pelamina/public_html/`) pada setiap baris tugas deployment agar dieksekusi 100% tuntas oleh subshell cPanel runner.
-- **Hasil**: GitHub dan cPanel Git Version Control terhubung 100% dan proses deploy ke `public_html/` siap dijalankan dengan sekali klik.
+#### 108. Diagnosis Tampilan Polos Hosting & Penegasan BASE_URL Host Filter ([config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php))
+- **Akar Masalah (Root Cause)**:
+  - Pada hosting live, file `public_html/config/helpers.php` sebelumnya masih membawa nilai `define('BASE_URL', '/pelaminan')` dari arsip zip awal, sehingga seluruh tag link CSS, gambar, dan JS dipanggil ke `/pelaminan/assets/...` yang menghasilkan HTTP 404 (tampilan menjadi HTML polos tanpa styling).
+- **Item Pekerjaan**:
+  - Memperbarui pendeteksian `BASE_URL` di [config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php) dengan pengecekan eksplisit `$_SERVER['HTTP_HOST']` untuk domain `pelaminanfamily.my.id` (mengembalikan `''`) dan localhost subfolder (mengembalikan `'/pelaminan'`).
+  - Mem-push pembaruan ke repositori GitHub `fajar-romadhan/pelaminan` branch `main`.
+  - Memberikan panduan deployment (Pull & Deploy via cPanel Git atau Edit langsung via File Manager) kepada pengguna.
+- **Hasil**: Begitu file `config/helpers.php` ter-update di `public_html/`, CSS dan seluruh gambar di `https://pelaminanfamily.my.id/` langsung aktif 100% dengan tampilan mewah normal.
 
 ---
 
@@ -852,3 +859,4 @@
 - **Panel Admin**: `admin/index.php`, `admin/orders.php`, `admin/products.php`, `admin/product-variants.php`, `admin/items.php`, `admin/production-calendar.php`, `admin/operational-report.php`, `admin/export-report-pdf.php`, `admin/notifications.php`
 - **Konfigurasi & Utility**: `config/database.php`, `config/helpers.php`, `assets/css/style.css`, `assets/js/delivery-map.js`, `assets/js/checkout-shipping.js`
 - **Dokumentasi**: `PROJECT_KNOWLEDGE.md`, `DOKUMEN_HALAMAN_SISTEM.md`, `HOSTING_NOTES.md`
+
