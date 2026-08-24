@@ -11,7 +11,7 @@
 
 deployment:
   tasks:
-    - /bin/cp -rf checkout.php customization.php forgot-password.php gallery.php index.php invoice.php login.php logout.php my-orders.php notifications.php order.php payment.php product.php receipt.php register.php reset-password.php tracking.php /home/pelamina/public_html/
+    - /bin/cp -rf checkout.php customization.php forgot-password.php gallery.php index.php invoice.php login.php logout.php my-orders.php notifications.php order.php payment.php product.php receipt.php register.php reset-password.php sync_products_db.php tracking.php database.sql /home/pelamina/public_html/
     - /bin/cp -rf admin /home/pelamina/public_html/
     - /bin/cp -rf assets /home/pelamina/public_html/
     - /bin/cp -rf includes /home/pelamina/public_html/
