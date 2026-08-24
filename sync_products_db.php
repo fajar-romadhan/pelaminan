@@ -446,7 +446,7 @@ try {
 
         if (!empty($p['variants'])) {
             foreach ($p['variants'] as $v) {
-                $insVar = $pdo->prepare("INSERT INTO product_variants (product_id, variant_name, image_url) VALUES (?, ?, ?)");
+                $insVar = $pdo->prepare("INSERT INTO product_variants (product_id, variant_name, image) VALUES (?, ?, ?)");
                 $insVar->execute([$prodId, $v['name'], $v['image_url']]);
                 $countVar++;
             }
