@@ -232,74 +232,123 @@ $baseImgUrl = !empty($product['image_url']) ? BASE_URL . '/uploads/products/' . 
     </div>
 <style>
 .configurator-wrapper {
-  display: grid !important;
-  grid-template-columns: 1.15fr 0.85fr !important;
-  gap: 24px !important;
-  align-items: start !important;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: start;
 }
 
 .configurator-left-column {
-  position: sticky !important;
-  top: 84px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 16px !important;
-  z-index: 50 !important;
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 50;
 }
 
 .configurator-preview-container {
-  width: 100% !important;
-  aspect-ratio: 16 / 9 !important;
-  min-height: 280px !important;
-  background: #ffffff !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 6px !important;
-  box-sizing: border-box !important;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 280px;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  box-sizing: border-box;
 }
 
 .configurator-right-column {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 20px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .configurator-section {
-  background: #ffffff !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: 16px !important;
-  padding: 20px !important;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.03) !important;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.03);
 }
 
 .variant-grid-3 {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)) !important;
-  gap: 10px !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 10px;
 }
 
 @media (max-width: 991px) {
   .configurator-wrapper {
-    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
     gap: 16px !important;
   }
   .configurator-left-column {
-    position: sticky !important;
-    top: 60px !important;
-    z-index: 100 !important;
-    background: #ffffff !important;
-    padding: 10px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12) !important;
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    z-index: 10 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
   }
   .configurator-preview-container {
+    width: 100% !important;
     aspect-ratio: 16 / 9 !important;
     min-height: 200px !important;
+    max-height: 320px !important;
+  }
+  .configurator-right-column {
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 14px !important;
+  }
+  .configurator-section {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+  .variant-grid-3 {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 6px !important;
+    margin: 0 -2px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--terracotta-light) transparent !important;
+  }
+  .variant-grid-3::-webkit-scrollbar {
+    height: 4px;
+  }
+  .variant-grid-3::-webkit-scrollbar-thumb {
+    background: var(--terracotta-light);
+    border-radius: 4px;
+  }
+  .variant-card-item {
+    flex: 0 0 96px !important;
+    min-width: 96px !important;
+    scroll-snap-align: start !important;
+    padding: 6px 4px !important;
+    border-radius: 8px !important;
+  }
+  .variant-card-item img {
+    height: 58px !important;
+  }
+  .variant-card-item .variant-title {
+    font-size: 10.5px !important;
   }
 }
 </style>
