@@ -68,15 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect(BASE_URL . '/payment.php?order_id=' . $orderId . '&type=' . $postType);
     }
 
-    // Move uploaded file to assets/uploads/payments/
-    $uploadDir = __DIR__ . '/assets/uploads/payments/';
+    // Move uploaded file to uploads/payments/
+    $uploadDir = __DIR__ . '/uploads/payments/';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
 
     $fileName = 'proof_' . preg_replace('/[^A-Za-z0-9_\-]/', '_', $order['order_code']) . '_' . time() . '.' . $fileExt;
     $targetPath = $uploadDir . $fileName;
-    $dbPath = 'assets/uploads/payments/' . $fileName;
+    $dbPath = 'uploads/payments/' . $fileName;
 
     if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
         set_flash('danger', 'Gagal mengunggah file bukti transfer. Silakan coba lagi.');
