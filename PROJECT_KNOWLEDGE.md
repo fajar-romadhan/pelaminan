@@ -843,14 +843,27 @@
   - Berhasil meng-clone repositori GitHub `https://github.com/fajar-romadhan/pelaminan.git` ke dalam cPanel Git™ Version Control (`/home/pelamina/repositories/pelaminan`).
   - Mengubah visibilitas repositori GitHub menjadi **Public** sehingga proses clone dan update remote cPanel berjalan cepat tanpa batasan autentikasi non-interaktif.
   - Memperbaiki berkas [`.cpanel.yml`](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml) dengan mengganti variabel `export DEPLOYPATH` menjadi path absolut langsung (`/home/pelamina/public_html/`) pada setiap baris tugas deployment agar dieksekusi 100% tuntas oleh subshell cPanel runner.
-#### 108. Diagnosis Tampilan Polos Hosting & Penegasan BASE_URL Host Filter ([config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php))
+### 🔹 Sesi: 24 Agustus 2026
+
+#### 108. Diagnosis & Perbaikan Tampilan Polos Hosting (BASE_URL & Host Routing) ([config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php))
 - **Akar Masalah (Root Cause)**:
-  - Pada hosting live, file `public_html/config/helpers.php` sebelumnya masih membawa nilai `define('BASE_URL', '/pelaminan')` dari arsip zip awal, sehingga seluruh tag link CSS, gambar, dan JS dipanggil ke `/pelaminan/assets/...` yang menghasilkan HTTP 404 (tampilan menjadi HTML polos tanpa styling).
+  - Pada hosting live `pelaminanfamily.my.id`, file `public_html/config/helpers.php` sebelumnya masih membawa nilai `define('BASE_URL', '/pelaminan')` dari arsip zip awal.
+  - Akibatnya, seluruh tag link stylesheet CSS, file JavaScript, dan gambar dipanggil ke `https://pelaminanfamily.my.id/pelaminan/assets/...` yang menghasilkan HTTP 404 (tampilan halaman menjadi HTML polos tanpa gaya).
 - **Item Pekerjaan**:
   - Memperbarui pendeteksian `BASE_URL` di [config/helpers.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/config/helpers.php) dengan pengecekan eksplisit `$_SERVER['HTTP_HOST']` untuk domain `pelaminanfamily.my.id` (mengembalikan `''`) dan localhost subfolder (mengembalikan `'/pelaminan'`).
-  - Mem-push pembaruan ke repositori GitHub `fajar-romadhan/pelaminan` branch `main`.
-  - Memberikan panduan deployment (Pull & Deploy via cPanel Git atau Edit langsung via File Manager) kepada pengguna.
-- **Hasil**: Begitu file `config/helpers.php` ter-update di `public_html/`, CSS dan seluruh gambar di `https://pelaminanfamily.my.id/` langsung aktif 100% dengan tampilan mewah normal.
+  - Menjalankan perintah pull dan copy di cPanel Terminal: `cd /home/pelamina/repositories/pelaminan && git pull origin main && cp -rf config/helpers.php /home/pelamina/public_html/config/`.
+- **Hasil**: Seluruh file CSS, logo navbar, panggung pelaminan 3D beranda, dan skrip Leaflet aktif 100% dengan status HTTP 200 OK dan tampilan mewah responsif.
+
+#### 109. Sinkronisasi Data Database Produk & Varian Warna Lengkap ([sync_products_db.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/sync_products_db.php), [database.sql](file:///e:/JOB/BANTU/NURTASAH/pelaminan/database.sql))
+- **Akar Masalah (Root Cause)**:
+  - Pada galeri produk (`gallery.php`), kartu produk menampilkan ikon bunga placeholder (`🌸`) karena data produk di tabel `products` database MySQL hosting belum memiliki nama berkas gambar pada kolom `image_url` (bernilai NULL).
+  - Pada pengujian awal eksekusi script sync, muncul pesan error `Unknown column 'image_url' in 'INSERT INTO'` karena kolom berkas gambar pada tabel `product_variants` bernama `image` (bukan `image_url`).
+- **Item Pekerjaan**:
+  - Membuat skrip otomatis [sync_products_db.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/sync_products_db.php) yang memetakan seluruh 23 produk aktif (kategori Pelaminan, Gazebo, Kotak Akas, Pot Bunga) ke foto aslinya di `uploads/products/` serta mendaftarkan seluruh 58+ variasi warna ke `uploads/products/variants/`.
+  - Memperbaiki kueri `INSERT INTO product_variants` agar menggunakan nama kolom yang tepat (`image`).
+  - Menambahkan proteksi fallback koneksi database hosting `pelamina_pelaminan` di [sync_products_db.php](file:///e:/JOB/BANTU/NURTASAH/pelaminan/sync_products_db.php).
+  - Memperbarui skrip master [database.sql](file:///e:/JOB/BANTU/NURTASAH/pelaminan/database.sql) dan berkas [.cpanel.yml](file:///e:/JOB/BANTU/NURTASAH/pelaminan/.cpanel.yml).
+- **Hasil**: Data katalog produk dan variasi warna di database hosting terhubung 100% ke seluruh aset gambar beresolusi tinggi, bebas error database, dan galeri produk tampil jernih.
 
 ---
 
@@ -859,4 +872,5 @@
 - **Panel Admin**: `admin/index.php`, `admin/orders.php`, `admin/products.php`, `admin/product-variants.php`, `admin/items.php`, `admin/production-calendar.php`, `admin/operational-report.php`, `admin/export-report-pdf.php`, `admin/notifications.php`
 - **Konfigurasi & Utility**: `config/database.php`, `config/helpers.php`, `assets/css/style.css`, `assets/js/delivery-map.js`, `assets/js/checkout-shipping.js`
 - **Dokumentasi**: `PROJECT_KNOWLEDGE.md`, `DOKUMEN_HALAMAN_SISTEM.md`, `HOSTING_NOTES.md`
+
 
