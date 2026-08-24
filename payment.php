@@ -54,32 +54,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $file = $_FILES['payment_proof'];
-    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    $fileMime = mime_content_type($file['tmp_name']);
+    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/pjpeg', 'image/x-png'];
+    $fileMime = function_exists('mime_content_type') ? @mime_content_type($file['tmp_name']) : '';
     $fileExt = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-    if (!in_array($fileMime, $allowedTypes, true) || !in_array($fileExt, ['jpg', 'jpeg', 'png'], true)) {
-        set_flash('danger', 'Format bukti transfer harus berupa gambar JPG, JPEG, atau PNG.');
+    if (!in_array($fileExt, ['jpg', 'jpeg', 'png', 'webp'], true)) {
+        set_flash('danger', 'Format bukti transfer harus berupa gambar JPG, JPEG, PNG, atau WEBP.');
         redirect(BASE_URL . '/payment.php?order_id=' . $orderId . '&type=' . $postType);
     }
 
-    if ($file['size'] > 5 * 1024 * 1024) {
-        set_flash('danger', 'Ukuran file bukti transfer maksimal 5MB.');
+    if ($file['size'] > 10 * 1024 * 1024) {
+        set_flash('danger', 'Ukuran file bukti transfer maksimal 10MB.');
         redirect(BASE_URL . '/payment.php?order_id=' . $orderId . '&type=' . $postType);
     }
 
-    // Move uploaded file to uploads/payments/
-    $uploadDir = __DIR__ . '/uploads/payments/';
+    // Target upload directory
+    $baseDir = defined('BASE_PATH') ? BASE_PATH : __DIR__;
+    $uploadDir = $baseDir . '/uploads/payments/';
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+        @mkdir($uploadDir, 0777, true);
+        @chmod($uploadDir, 0777);
     }
 
-    $fileName = 'proof_' . preg_replace('/[^A-Za-z0-9_\-]/', '_', $order['order_code']) . '_' . time() . '.' . $fileExt;
+    $cleanCode = preg_replace('/[^A-Za-z0-9_\-]/', '_', $order['order_code']);
+    $fileName = 'proof_' . $cleanCode . '_' . time() . '_' . rand(100, 999) . '.' . $fileExt;
     $targetPath = $uploadDir . $fileName;
     $dbPath = 'uploads/payments/' . $fileName;
 
-    if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
-        set_flash('danger', 'Gagal mengunggah file bukti transfer. Silakan coba lagi.');
+    $uploaded = @move_uploaded_file($file['tmp_name'], $targetPath);
+    if (!$uploaded) {
+        $uploaded = @copy($file['tmp_name'], $targetPath);
+    }
+    if (!$uploaded && is_readable($file['tmp_name'])) {
+        $fileData = @file_get_contents($file['tmp_name']);
+        if ($fileData !== false && $fileData !== '') {
+            $uploaded = (@file_put_contents($targetPath, $fileData) !== false);
+        }
+    }
+
+    if (!$uploaded) {
+        set_flash('danger', 'Gagal menyimpan file bukti transfer ke server. Pastikan folder uploads/payments/ memiliki izin tulis (chmod 777).');
         redirect(BASE_URL . '/payment.php?order_id=' . $orderId . '&type=' . $postType);
     }
 
