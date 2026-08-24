@@ -4,7 +4,21 @@
 // Distributor Pelaminan Family
 // ============================================================
 
-require_once __DIR__ . '/config/database.php';
+if (file_exists(__DIR__ . '/config/database.php')) {
+    require_once __DIR__ . '/config/database.php';
+} elseif (file_exists('/home/pelamina/public_html/config/database.php')) {
+    require_once '/home/pelamina/public_html/config/database.php';
+} else {
+    // Fallback koneksi hosting
+    $host = 'localhost';
+    $dbname = 'pelamina_pelaminan';
+    $username = 'pelamina_id_rsa';
+    $password = 'X^?DtZ_FEO_$vcmu';
+    $pdo = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8mb4", $username, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+}
 
 echo "<pre>\n";
 echo "=== MEMULAI SINKRONISASI PRODUK & FOTO DATABASE ===\n\n";
