@@ -3,11 +3,16 @@
 date_default_timezone_set('Asia/Jakarta');
 
 if (!defined('BASE_URL')) {
-    $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
-    if (strpos($scriptName, '/pelaminan/') === 0 || $scriptName === '/pelaminan') {
-        define('BASE_URL', '/pelaminan');
-    } else {
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    if (strpos($host, 'pelaminanfamily.my.id') !== false) {
         define('BASE_URL', '');
+    } else {
+        $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+        if (strpos($scriptName, '/pelaminan/') === 0 || $scriptName === '/pelaminan') {
+            define('BASE_URL', '/pelaminan');
+        } else {
+            define('BASE_URL', '');
+        }
     }
 }
 
