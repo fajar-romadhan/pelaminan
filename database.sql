@@ -159,6 +159,7 @@ CREATE TABLE orders (
   total_amount DECIMAL(14,2) NOT NULL,
   dp_amount DECIMAL(14,2) NOT NULL,
   paid_amount DECIMAL(14,2) DEFAULT 0,
+  queue_number INT NULL DEFAULT NULL,
   status ENUM(
     'WAITING_PAYMENT',
     'PAYMENT_RECEIVED',
@@ -190,69 +191,15 @@ CREATE TABLE payments (
   type ENUM('dp','final','full') NOT NULL,
   method VARCHAR(80) DEFAULT 'Virtual Account BRI',
   amount DECIMAL(14,2) NOT NULL,
+  proof_image VARCHAR(255) NULL DEFAULT NULL,
   status ENUM('pending','berhasil','gagal') DEFAULT 'pending',
   paid_at DATETIME NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE invoices (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL UNIQUE,
-  invoice_number VARCHAR(60) NOT NULL UNIQUE,
-  issued_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-  due_date DATETIME NULL,
-  status ENUM('DRAFT', 'ISSUED', 'PAID', 'CANCELLED') DEFAULT 'ISSUED',
-  notes TEXT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE receipts (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  payment_id INT NOT NULL UNIQUE,
-  order_id INT NOT NULL,
-  receipt_number VARCHAR(60) NOT NULL UNIQUE,
-  issued_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-  amount DECIMAL(14,2) NOT NULL,
-  payment_type VARCHAR(50) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (payment_id) REFERENCES payments(id) ON DELETE CASCADE,
-  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE production_queue (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL UNIQUE,
-  queue_number INT NOT NULL,
-  priority INT DEFAULT 0,
-  estimated_start_date DATE NULL,
-  estimated_end_date DATE NULL,
-  production_status ENUM('WAITING', 'PRODUCING', 'COMPLETED', 'CANCELLED') DEFAULT 'WAITING',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE production_schedule (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL,
-  start_date DATE NOT NULL,
-  end_date DATE NOT NULL,
-  status VARCHAR(50) DEFAULT 'SCHEDULED',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE order_status_history (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL,
-  old_status VARCHAR(50) NULL,
-  new_status VARCHAR(50) NOT NULL,
-  changed_by INT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabel legacy (invoices, receipts, production_queue, production_schedule, order_status_history)
+-- telah dihapus. Sistem menggunakan data langsung dari tabel orders & payments.
 
 CREATE TABLE notifications (
   id INT AUTO_INCREMENT PRIMARY KEY,

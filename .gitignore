@@ -46,3 +46,7 @@ node_modules/
 # ---- File environment lokal ----
 .env
 .env.local
+
+# ---- File tools sementara (migration & diagnostik) ----
+fix_db_migration.sql
+diag.php
