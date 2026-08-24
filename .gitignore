@@ -10,6 +10,12 @@ config/database.php
 # Upload foto produk dilakukan manual via cPanel File Manager.
 # uploads/
 
+# ---- Catatan & Dokumentasi Proyek (Lokal Saja) ----
+PROJECT_KNOWLEDGE.md
+HOSTING_NOTES.md
+DOKUMEN_HALAMAN_SISTEM.md
+.agents/
+
 # ---- File sementara & scratch ----
 scratch/
 
