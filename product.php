@@ -26,30 +26,29 @@ include 'includes/header.php';
 
 $baseImgUrl = !empty($product['image_url']) ? BASE_URL . '/uploads/products/' . e($product['image_url']) : BASE_URL . '/assets/img/no-image.png';
 ?>
-<main class="container" style="padding-top:34px">
-  <p><a style="color:var(--terracotta-dark);font-weight:900" href="<?= BASE_URL ?>/gallery.php">← Kembali ke Galeri</a></p>
+<main class="container product-detail-page">
+  <p><a class="btn-back-nav" href="<?= BASE_URL ?>/gallery.php"><span class="icon-arrow">←</span> Kembali ke Galeri</a></p>
   
-  <div class="grid grid-2" style="align-items:start;margin-top:20px">
+  <div class="grid grid-2 product-detail-grid">
     <div>
-      <div style="width:100%;aspect-ratio:16/9;min-height:360px;max-height:560px;overflow:hidden;border-radius:16px;margin-bottom:14px;background:#ffffff;border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;padding:8px;">
+      <div class="product-main-preview">
         <?php if (!empty($product['image_url'])): ?>
-          <img id="mainProductImage" src="<?= $baseImgUrl ?>" alt="<?= e($product['name']) ?>" style="width:100%;height:100%;object-fit:contain;object-position:center;transition:all 0.3s ease;" onerror="this.src='<?= BASE_URL ?>/assets/img/no-image.png'">
+          <img id="mainProductImage" src="<?= $baseImgUrl ?>" alt="<?= e($product['name']) ?>" onerror="this.src='<?= BASE_URL ?>/assets/img/no-image.png'">
         <?php else: ?>
           <div class="image-placeholder" style="height:100%"><div class="icon-big">🏛️</div>Foto Utama Produk</div>
         <?php endif; ?>
       </div>
 
-      <div style="background:#fff;border:1px solid var(--border-subtle);border-radius:14px;padding:16px;">
-        <h4 style="font-size:15px;color:var(--espresso);margin:0 0 10px;">Pilihan Warna (Foto Asli Pelaminan):</h4>
-        <div class="variant-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:10px;">
+      <div class="product-variants-section">
+        <h4>Pilihan Warna (Foto Asli Pelaminan):</h4>
+        <div class="variant-cards-grid">
           <!-- 1. Base Product Photo Card (Always available to return to base photo) -->
           <div class="variant-card active" 
                data-id="" 
                data-name="Warna Utama (Original)" 
-               data-img="<?= $baseImgUrl ?>"
-               style="border:2px solid var(--terracotta-dark);border-radius:10px;padding:6px;cursor:pointer;background:#fff;text-align:center;transition:all 0.2s ease;">
-            <img src="<?= $baseImgUrl ?>" alt="Warna Utama" style="width:100%;height:70px;object-fit:contain;object-position:center;border-radius:6px;margin-bottom:4px;" onerror="this.src='<?= BASE_URL ?>/assets/img/no-image.png'">
-            <span style="font-size:11px;font-weight:700;color:var(--espresso);display:block;">Warna Utama</span>
+               data-img="<?= $baseImgUrl ?>">
+            <img src="<?= $baseImgUrl ?>" alt="Warna Utama" onerror="this.src='<?= BASE_URL ?>/assets/img/no-image.png'">
+            <span>Warna Utama</span>
           </div>
 
           <!-- 2. Photo Color Variants from product_variants -->
@@ -59,31 +58,30 @@ $baseImgUrl = !empty($product['image_url']) ? BASE_URL . '/uploads/products/' . 
             <div class="variant-card" 
                  data-id="<?= (int)$v['id'] ?>" 
                  data-name="<?= e($v['variant_name']) ?>" 
-                 data-img="<?= $vImg ?>"
-                 style="border:2px solid var(--border-subtle);border-radius:10px;padding:6px;cursor:pointer;background:#fff;text-align:center;transition:all 0.2s ease;">
-              <img src="<?= $vImg ?>" alt="<?= e($v['variant_name']) ?>" style="width:100%;height:70px;object-fit:contain;object-position:center;border-radius:6px;margin-bottom:4px;" onerror="this.src='<?= BASE_URL ?>/assets/img/no-image.png'">
-              <span style="font-size:11px;font-weight:700;color:var(--espresso);display:block;"><?= e($v['variant_name']) ?></span>
+                 data-img="<?= $vImg ?>">
+              <img src="<?= $vImg ?>" alt="<?= e($v['variant_name']) ?>" onerror="this.src='<?= BASE_URL ?>/assets/img/no-image.png'">
+              <span><?= e($v['variant_name']) ?></span>
             </div>
           <?php endforeach; ?>
         </div>
       </div>
     </div>
     
-    <div class="card">
+    <div class="card product-info-card">
       <span class="tag"><?= e($product['category_name']) ?></span>
-      <h1 style="font-size:30px;color:var(--espresso);margin-top:12px">
+      <h1 class="product-detail-title">
         <?= e($product['name']) ?>
-        <span id="selectedVariantName" style="color:var(--terracotta-dark);font-size:20px;display:block;margin-top:4px;"></span>
+        <span id="selectedVariantName" class="selected-variant-subtitle"></span>
       </h1>
       <p><span class="badge badge-muted">Kode: <?= e($product['code']) ?></span> <span class="badge badge-muted"><?= e($product['size']) ?></span></p>
-      <p style="font-size:15px;color:var(--muted);line-height:1.5;"><?= e($product['description']) ?></p>
+      <p class="product-desc"><?= e($product['description']) ?></p>
       
-      <div class="price-box" style="background:linear-gradient(90deg,rgba(247,231,206,.7),#fff);border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:18px;margin:24px 0">
+      <div class="price-box">
         <small class="muted">Harga Mulai Dari</small>
-        <div class="product-price" style="font-size:32px;font-weight:900;color:var(--terracotta-dark)"><?= rupiah($product['price']) ?></div>
+        <div class="product-price"><?= rupiah($product['price']) ?></div>
       </div>
       
-      <div class="actions" style="display:flex;flex-direction:column;gap:10px">
+      <div class="actions">
         <a id="btnOrderNow" class="btn btn-primary btn-block" href="<?= BASE_URL ?>/order.php?id=<?= (int)$product['id'] ?>">🛒 Pesan Sekarang</a>
         <?php if (strtolower(trim($product['category_name'])) === 'pelaminan'): ?>
           <a id="btnCustomize" class="btn btn-outline btn-block" href="<?= BASE_URL ?>/customization.php?id=<?= (int)$product['id'] ?>">🎨 Kustomisasi Produk Ini</a>
@@ -105,13 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     variantCards.forEach(card => {
         card.addEventListener('click', function() {
-            variantCards.forEach(c => {
-                c.style.borderColor = 'var(--border-subtle)';
-                c.style.boxShadow = 'none';
-                c.classList.remove('active');
-            });
-            this.style.borderColor = 'var(--terracotta-dark)';
-            this.style.boxShadow = '0 2px 8px rgba(183,110,121,0.25)';
+            variantCards.forEach(c => c.classList.remove('active'));
             this.classList.add('active');
 
             const imgUrl = this.getAttribute('data-img');

@@ -113,7 +113,8 @@ if ($adminUser) {
       position: absolute;
       right: 0;
       top: 50px;
-      width: 360px;
+      width: min(360px, calc(100vw - 28px));
+      max-width: calc(100vw - 28px);
       background: #ffffff;
       border-radius: 16px;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(54, 34, 23, 0.08);
