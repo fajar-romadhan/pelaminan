@@ -33,7 +33,7 @@ if ($user && ($user['role'] ?? '') === 'customer') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= e($pageTitle) ?></title>
-  <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css?v=20260824_v3">
+  <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css?v=20260824_v4">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/leaflet.css">
   <script src="<?= BASE_URL ?>/assets/js/leaflet.js"></script>
 

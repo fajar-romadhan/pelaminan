@@ -1781,17 +1781,42 @@ html, body {
   }
 
   .product-detail-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin-top: 12px;
     gap: 16px;
   }
 
+  .product-detail-grid > div,
+  .product-detail-grid > .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
   .product-main-preview {
-    min-height: 220px;
-    max-height: 340px;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 220px !important;
+    max-height: 340px !important;
     aspect-ratio: 16 / 9;
     border-radius: 14px;
-    padding: 6px;
+    padding: 8px;
     margin-bottom: 12px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .product-main-preview img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    margin: 0 auto !important;
+    display: block !important;
   }
 
   .product-variants-section {
