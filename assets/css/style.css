@@ -2413,6 +2413,33 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
+/* MODERN ANIMATED MAP SEARCH INPUT */
+.map-search-animated-input {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease !important;
+  border: 1.5px solid rgba(216, 133, 78, 0.4) !important;
+  font-size: 13.5px !important;
+  color: var(--espresso) !important;
+  box-shadow: 0 3px 10px rgba(54, 34, 23, 0.03);
+}
+
+.map-search-animated-input:focus {
+  border-color: var(--terracotta) !important;
+  box-shadow: 0 0 0 4px rgba(216, 133, 78, 0.18), 0 8px 20px rgba(54, 34, 23, 0.08) !important;
+  background: #ffffff !important;
+}
+
+.map-search-animated-input::placeholder {
+  color: #968379;
+  font-style: normal;
+  transition: opacity 0.2s ease;
+}
+
+#btn-clear-map-search:hover {
+  background: rgba(216, 133, 78, 0.25) !important;
+  color: var(--terracotta-dark) !important;
+  transform: translateY(-50%) scale(1.08) !important;
+}
+
 /* ==========================================================================
    DESIGN EDITOR & CONFIGURATOR SPLIT 2-COLUMN LAYOUT (DESKTOP & MOBILE STICKY)
    ========================================================================== */

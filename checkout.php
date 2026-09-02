@@ -284,9 +284,13 @@ window.SHIPPING_RATES = <?= json_encode(
         
         <div id="map-search-wrapper" class="form-group" style="margin-bottom:14px;position:relative;">
           <label style="font-weight:700;color:var(--espresso);font-size:13.5px;">🔍 Cari Alamat Pengiriman</label>
-          <div class="map-search-input-group" style="display:flex;gap:8px;margin-top:4px;width:100%;">
-            <input type="text" id="map-search-input" class="input" placeholder="Ketik nama jalan / perumahan / toko (misal: Perumahan Kencana Indah Palembang)..." style="flex:1;min-width:0;background:#ffffff;" autocomplete="off">
-            <button type="button" id="btn-search-map" class="btn btn-primary btn-sm" style="white-space:nowrap;border-radius:12px;padding:0 20px;font-weight:700;flex-shrink:0;">🔍 Cari Alamat</button>
+          <div class="map-search-input-group" style="position:relative;display:flex;gap:8px;margin-top:6px;width:100%;">
+            <div style="position:relative;flex:1;min-width:0;">
+              <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:15px;opacity:0.65;z-index:2;">🔍</span>
+              <input type="text" id="map-search-input" class="input map-search-animated-input" placeholder="Ketik nama jalan / perumahan / toko (misal: Perumahan Kencana Indah Palembang)..." style="width:100%;padding-left:40px;padding-right:34px;border-radius:14px;background:#ffffff;" autocomplete="off">
+              <button type="button" id="btn-clear-map-search" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:rgba(54,34,23,0.08);border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#555;padding:0;line-height:1;transition:all 0.15s ease;" title="Hapus pencarian">✕</button>
+            </div>
+            <button type="button" id="btn-search-map" class="btn btn-primary btn-sm" style="white-space:nowrap;border-radius:14px;padding:0 22px;font-weight:700;flex-shrink:0;">Cari Alamat</button>
           </div>
           <div id="map-search-autocomplete" class="map-autocomplete-dropdown" style="position:absolute;top:calc(100% + 4px);left:0;right:0;width:100%;z-index:999999;background:#ffffff;border-radius:16px;border:1px solid rgba(216,133,78,0.35);box-shadow:0 16px 36px rgba(54,34,23,0.16);max-height:280px;overflow-y:auto;padding:6px;display:none;box-sizing:border-box;"></div>
         </div>

@@ -1273,6 +1273,7 @@
 
       function selectItem(item) {
         closeAC(); searchInput.value = item.title;
+        updateClearBtnVisibility();
         var lat = parseFloat(item.lat), lng = parseFloat(item.lng);
         if (!isInsideSouthSumatra(lat, lng)) { showCoverageWarning(item.title); return; }
         updateLocation(lat, lng, true);
@@ -1379,8 +1380,97 @@
         items.forEach(function (it, i) { it.classList.toggle('active', i === focusIdx); if (i === focusIdx) it.scrollIntoView({ block: 'nearest' }); });
       }
 
-      searchInput.addEventListener('input', function () { clearTimeout(debounceTimer); debounceTimer = setTimeout(function () { fetchSuggestions(searchInput.value); }, 220); });
-      searchInput.addEventListener('focus', function () { if (searchInput.value.trim().length >= 2) fetchSuggestions(searchInput.value); });
+      // ── DYNAMIC ROTATING PLACEHOLDER (TYPEWRITER ANIMATION) ──
+      var clearBtn = document.getElementById('btn-clear-map-search');
+      var searchPhrases = [
+        "Ketik nama perumahan (misal: Perumahan Musi Palem Indah)...",
+        "Ketik nama jalan (misal: Jl. Jendral Sudirman Palembang)...",
+        "Ketik toko / ruko (misal: Toko Nia Sako Rambutan)...",
+        "Ketik patokan lokasi (misal: Dekat Jembatan Ampera)...",
+        "Ketik perumahan (misal: Perumahan Kencana Indah Palembang)...",
+        "Ketik nama gedung / mall (misal: OPI Mall Jakabaring)...",
+        "Ketik nama masjid (misal: Masjid Baiturohim Sako)...",
+        "Ketik nama kelurahan (misal: Sematang Borang, Palembang)..."
+      ];
+
+      var phraseIdx = 0;
+      var charIdx = 0;
+      var isDeleting = false;
+      var typewriterTimer = null;
+      var isSearchFocused = false;
+
+      function updateClearBtnVisibility() {
+        if (clearBtn) {
+          clearBtn.style.display = (searchInput.value && searchInput.value.length > 0) ? 'flex' : 'none';
+        }
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          searchInput.value = '';
+          updateClearBtnVisibility();
+          closeAC();
+          searchInput.focus();
+        });
+      }
+
+      function typeLoop() {
+        if (isSearchFocused || (searchInput.value && searchInput.value.length > 0)) {
+          return;
+        }
+
+        var currentPhrase = searchPhrases[phraseIdx];
+        var typingSpeed = isDeleting ? 25 : 48;
+
+        if (!isDeleting) {
+          charIdx++;
+          searchInput.setAttribute('placeholder', currentPhrase.substring(0, charIdx));
+          if (charIdx === currentPhrase.length) {
+            isDeleting = true;
+            typewriterTimer = setTimeout(typeLoop, 2200);
+            return;
+          }
+        } else {
+          charIdx--;
+          searchInput.setAttribute('placeholder', currentPhrase.substring(0, charIdx));
+          if (charIdx === 0) {
+            isDeleting = false;
+            phraseIdx = (phraseIdx + 1) % searchPhrases.length;
+            typewriterTimer = setTimeout(typeLoop, 450);
+            return;
+          }
+        }
+
+        typewriterTimer = setTimeout(typeLoop, typingSpeed);
+      }
+
+      searchInput.addEventListener('focus', function () {
+        isSearchFocused = true;
+        clearTimeout(typewriterTimer);
+        searchInput.setAttribute('placeholder', 'Ketik nama jalan, perumahan, toko, atau kelurahan di Sumsel...');
+        if (searchInput.value.trim().length >= 2) fetchSuggestions(searchInput.value);
+      });
+
+      searchInput.addEventListener('blur', function () {
+        isSearchFocused = false;
+        if (!searchInput.value.trim()) {
+          charIdx = 0;
+          isDeleting = false;
+          typewriterTimer = setTimeout(typeLoop, 600);
+        }
+      });
+
+      searchInput.addEventListener('input', function () {
+        updateClearBtnVisibility();
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function () { fetchSuggestions(searchInput.value); }, 220);
+      });
+
+      // Start typewriter animation smoothly on load
+      typewriterTimer = setTimeout(typeLoop, 900);
+
       searchInput.addEventListener('keydown', function (e) {
         var items = autocompleteDropdown ? autocompleteDropdown.querySelectorAll('.autocomplete-item') : [];
         if (e.key === 'ArrowDown') { e.preventDefault(); focusIdx = (focusIdx + 1) % Math.max(items.length, 1); hlItem(items); }
