@@ -780,10 +780,69 @@
     // ── REVERSE GEOCODE ──
     function reverseGeocode(lat, lng) {
       if (mapAddressInput) mapAddressInput.placeholder = 'Membaca nama alamat...';
-      fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng, { headers: { 'Accept-Language': 'id,en;q=0.8' } })
+      fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng + '&addressdetails=1', { headers: { 'Accept-Language': 'id,en;q=0.8' } })
         .then(function (r) { return r.json(); })
         .then(function (data) {
-          var address = data.display_name || ('Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6));
+          var addr = data.address || {};
+
+          // Susun alamat yang bersih: Kelurahan/Desa → Kecamatan → Kab/Kota → Provinsi
+          // Tanpa nomor rumah, RT/RW, nama jalan, agar lebih ringkas & jelas
+          var parts = [];
+
+          // Level 1: Nama perumahan / dusun / hamlet (jika ada)
+          var place = addr.hamlet || addr.neighbourhood || addr.allotments || '';
+          if (place) parts.push(place);
+
+          // Level 2: Kelurahan / Desa / Village / Suburb
+          var village = addr.village || addr.suburb || addr.city_district || addr.quarter || '';
+          if (village && village !== place) parts.push(village);
+
+          // Level 3: Kecamatan
+          var district = addr.town || addr.municipality || '';
+          // Dari Nominatim "state_district" atau prase manual dari county
+          var county = addr.county || '';      // biasanya "Kabupaten ..." atau "Kota ..."
+          var subdistrict = addr.city_district || addr.district || '';
+
+          // Untuk Sumsel, Nominatim sering pakai: state_district = Kabupaten
+          // dan county = Kecamatan. Kita normalkan.
+          // Coba ambil kecamatan dari county (bisa berisi "Kecamatan Sako" dsb)
+          if (county && county.toLowerCase().indexOf('kecamatan') >= 0) {
+            parts.push(county);
+          } else if (district) {
+            parts.push(district);
+          } else if (subdistrict && subdistrict !== village) {
+            parts.push(subdistrict);
+          }
+
+          // Level 4: Kabupaten / Kota
+          var city = addr.city || addr.state_district || county || '';
+          if (city && parts.indexOf(city) < 0 && city.toLowerCase().indexOf('kecamatan') < 0) {
+            parts.push(city);
+          }
+
+          // Level 5: Provinsi
+          var state = addr.state || '';
+          if (state && parts.indexOf(state) < 0) parts.push(state);
+
+          // Jika semua kosong, fallback ke display_name tapi potong bagian pertama (detail jalan)
+          var address;
+          if (parts.length >= 2) {
+            address = parts.join(', ');
+          } else if (data.display_name) {
+            // Potong bagian depan (nomor, jalan, RT/RW) — ambil dari bagian ketiga seterusnya
+            var segments = data.display_name.split(', ');
+            // Cari indeks pertama yang kemungkinan kelurahan/desa (biasanya ≥ indeks 2-4)
+            var start = 0;
+            for (var i = 0; i < segments.length; i++) {
+              // Lewati segmen yang mengandung angka (nomor jalan, RT/RW)
+              if (/\d/.test(segments[i]) || segments[i].length <= 3) { start = i + 1; }
+              else { start = i; break; }
+            }
+            address = segments.slice(start, start + 5).join(', ');
+          } else {
+            address = 'Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6);
+          }
+
           lastValidLat = lat; lastValidLng = lng; currentLat = lat; currentLng = lng; hasSelectedLocation = true;
           if (latInput) latInput.value = lat.toFixed(7);
           if (lngInput) lngInput.value = lng.toFixed(7);
@@ -792,6 +851,7 @@
         })
         .catch(function () { if (mapAddressInput) mapAddressInput.value = 'Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6); });
     }
+
 
     function revertToLastValidLocation() {
       currentLat = lastValidLat; currentLng = lastValidLng;
