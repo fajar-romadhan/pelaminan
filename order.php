@@ -133,6 +133,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+$variantId = filter_input(INPUT_POST, 'variant_id', FILTER_VALIDATE_INT) ?: filter_input(INPUT_GET, 'variant_id', FILTER_VALIDATE_INT);
+$variantName = trim($_POST['variant_name'] ?? ($_GET['variant_name'] ?? ''));
+
+$orderProductImage = '';
+if (!empty($variantId)) {
+    $vImgStmt = $pdo->prepare('SELECT image, variant_name FROM product_variants WHERE id=? AND product_id=? LIMIT 1');
+    $vImgStmt->execute([$variantId, $id]);
+    $vRow = $vImgStmt->fetch();
+    if (!empty($vRow['image'])) {
+        $orderProductImage = BASE_URL . '/uploads/products/variants/' . e($vRow['image']);
+        if (empty($variantName) && !empty($vRow['variant_name'])) {
+            $variantName = $vRow['variant_name'];
+        }
+    }
+}
+if (empty($orderProductImage) && !empty($product['image_url'])) {
+    $orderProductImage = BASE_URL . '/uploads/products/' . e($product['image_url']);
+}
+
 $pageTitle = 'Form Pemesanan';
 $active = 'gallery';
 include 'includes/header.php';
@@ -231,8 +250,28 @@ window.SHIPPING_RATES = <?= json_encode(
     </div>
 
     <aside class="card order-summary">
-      <h3 style="color:var(--terracotta-dark)">Ringkasan Pesanan</h3>
-      <div class="image-placeholder" style="min-height:130px;margin-bottom:14px"><div>🏛️</div></div>
+      <h3 style="color:var(--terracotta-dark);margin-bottom:12px;">Ringkasan Pesanan</h3>
+      
+      <div class="order-summary-photo-card" style="margin-bottom:16px;border-radius:14px;overflow:hidden;border:1.5px solid var(--border-subtle);background:#ffffff;box-shadow:0 4px 14px rgba(54,34,23,0.05);">
+        <div style="width:100%;height:175px;background:#f8f4f0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
+          <?php if (!empty($orderProductImage)): ?>
+            <img src="<?= $orderProductImage ?>" alt="<?= e($product['name']) ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/assets/img/no-image.png';">
+          <?php else: ?>
+            <img src="<?= BASE_URL ?>/assets/img/no-image.png" alt="<?= e($product['name']) ?>" style="width:100%;height:100%;object-fit:contain;padding:16px;">
+          <?php endif; ?>
+          <span class="tag" style="position:absolute;top:10px;left:10px;background:rgba(255,255,255,0.94);backdrop-filter:blur(4px);box-shadow:0 2px 6px rgba(0,0,0,0.08);font-size:11px;font-weight:700;color:var(--terracotta-dark);border:1px solid rgba(216,133,78,0.25);">
+            <?= e($product['category_name'] ?? 'Pelaminan') ?>
+          </span>
+        </div>
+        <div style="padding:10px 14px;background:#fffaf6;border-top:1px solid var(--border-subtle);">
+          <strong style="font-size:14px;color:var(--espresso);display:block;line-height:1.35;"><?= e($product['name']) ?></strong>
+          <?php if (!empty($variantName)): ?>
+            <div style="font-size:12px;color:var(--terracotta-dark);font-weight:600;margin-top:2px;">
+              🎨 Varian: <?= e($variantName) ?>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
       <div class="summary-line" style="margin-top:14px;">
         <span>Harga Produk</span>
         <strong id="displaySubtotal" data-value="<?= (float)$product['price'] ?>"><?= rupiah($product['price']) ?></strong>

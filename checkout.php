@@ -15,7 +15,7 @@ $selectedCartIds = array_filter(array_map('intval', (array)$selectedCartIds));
 if (!empty($selectedCartIds)) {
     $placeholders = implode(',', array_fill(0, count($selectedCartIds), '?'));
     $cartStmt = $pdo->prepare("
-        SELECT c.id AS cart_id, c.quantity, c.design_id, c.variant_id, c.variant_name, p.id AS product_id, p.name, p.price,
+        SELECT c.id AS cart_id, c.quantity, c.design_id, c.variant_id, c.variant_name, p.id AS product_id, p.name, p.price, p.image_url,
                d.extra_items_json, d.extra_price, d.title AS design_title, d.variant_id AS design_variant_id, d.variant_name AS design_variant_name
         FROM carts c
         JOIN products p ON c.product_id = p.id
@@ -26,7 +26,7 @@ if (!empty($selectedCartIds)) {
 } else {
     // If no cart_ids specified, fetch all active cart items
     $cartStmt = $pdo->prepare("
-        SELECT c.id AS cart_id, c.quantity, c.design_id, c.variant_id, c.variant_name, p.id AS product_id, p.name, p.price,
+        SELECT c.id AS cart_id, c.quantity, c.design_id, c.variant_id, c.variant_name, p.id AS product_id, p.name, p.price, p.image_url,
                d.extra_items_json, d.extra_price, d.title AS design_title, d.variant_id AS design_variant_id, d.variant_name AS design_variant_name
         FROM carts c
         JOIN products p ON c.product_id = p.id
@@ -322,20 +322,29 @@ window.SHIPPING_RATES = <?= json_encode(
         $unitPrice = (float)$item['price'] + (float)($item['extra_price'] ?? 0);
         $itemSub = $unitPrice * (int)$item['quantity'];
         $extraDetails = !empty($item['extra_items_json']) ? json_decode($item['extra_items_json'], true) : [];
+        $itemImg = !empty($item['image_url']) ? BASE_URL . '/uploads/products/' . e($item['image_url']) : BASE_URL . '/assets/img/no-image.png';
       ?>
-        <div style="border-bottom:1px solid var(--border-subtle);padding-bottom:10px;margin-bottom:10px;">
-          <strong><?= e($item['name']) ?></strong><br>
-          <small class="muted"><?= (int)$item['quantity'] ?>x @ <?= rupiah($unitPrice) ?></small>
-          <?php if (!empty($extraDetails)): ?>
-            <div style="font-size:11px;color:var(--espresso);margin-top:4px;">
-              <strong>Item Tambahan:</strong>
-              <?php foreach($extraDetails as $ex): 
-                if (!empty($ex['is_shipping_meta'])) continue;
-              ?>
-                <div>• <?= e($ex['name'] ?? '') ?> (+<?= rupiah($ex['price'] ?? 0) ?>)</div>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
+        <div style="display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid var(--border-subtle);padding-bottom:12px;margin-bottom:12px;">
+          <div style="width:58px;height:58px;border-radius:10px;overflow:hidden;background:#f8f4f0;border:1px solid var(--border-subtle);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+            <img src="<?= $itemImg ?>" alt="<?= e($item['name']) ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/assets/img/no-image.png';">
+          </div>
+          <div style="flex:1;min-width:0;">
+            <strong style="font-size:13.5px;color:var(--espresso);display:block;line-height:1.3;"><?= e($item['name']) ?></strong>
+            <?php if (!empty($item['variant_name'])): ?>
+              <div style="font-size:11.5px;color:var(--terracotta-dark);font-weight:600;margin:2px 0;">🎨 Varian: <?= e($item['variant_name']) ?></div>
+            <?php endif; ?>
+            <small class="muted"><?= (int)$item['quantity'] ?>x @ <?= rupiah($unitPrice) ?></small>
+            <?php if (!empty($extraDetails)): ?>
+              <div style="font-size:11px;color:var(--espresso);margin-top:4px;">
+                <strong>Item Tambahan:</strong>
+                <?php foreach($extraDetails as $ex): 
+                  if (!empty($ex['is_shipping_meta'])) continue;
+                ?>
+                  <div>• <?= e($ex['name'] ?? '') ?> (+<?= rupiah($ex['price'] ?? 0) ?>)</div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          </div>
         </div>
       <?php endforeach; ?>
 
