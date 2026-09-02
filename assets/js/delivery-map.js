@@ -459,6 +459,12 @@
     { title:'Kec. Tanjung Agung — Muara Enim', subtitle:'Tanjung Agung, Muara Enim', lat:-3.8500, lng:103.8000, keywords:['tanjung agung muara enim'] },
     { title:'Kec. Ujan Mas — Muara Enim', subtitle:'Ujan Mas, Muara Enim', lat:-3.7500, lng:103.7500, keywords:['ujan mas'] },
     { title:'Tanjung Enim (Bukit Asam)', subtitle:'Tanjung Enim, Lawang Kidul, Muara Enim', lat:-3.7500, lng:103.8700, keywords:['tanjung enim','bukit asam','ptba'] },
+    { title:'Kantor Bupati Muara Enim', subtitle:'Jl. Jend. Ahmad Yani No. 1, Pasar I, Muara Enim', lat:-3.6558, lng:103.7782, keywords:['bupati muara enim','kantor bupati muara enim','pemkab muara enim'] },
+    { title:'RSUD Dr. H. Mohamad Rabain', subtitle:'Jl. Sultan Mahmud Badaruddin II No. 49, Muara Enim', lat:-3.6495, lng:103.7790, keywords:['rsud rabain','rsud muara enim','rumah sakit rabain'] },
+    { title:'Stasiun Kereta Api Muara Enim', subtitle:'Pasar II, Muara Enim', lat:-3.6530, lng:103.7755, keywords:['stasiun muara enim','kai muara enim'] },
+    { title:'Masjid Agung Muara Enim', subtitle:'Jl. Jend. Sudirman, Pasar I, Muara Enim', lat:-3.6540, lng:103.7770, keywords:['masjid agung muara enim'] },
+    { title:'Museum Batubara Tanjung Enim', subtitle:'Tanjung Enim, Lawang Kidul, Muara Enim', lat:-3.7510, lng:103.8715, keywords:['museum batubara','museum ptba','wisata tanjung enim'] },
+    { title:'Stasiun Tanjung Enim Baru', subtitle:'Tanjung Enim, Lawang Kidul, Muara Enim', lat:-3.7485, lng:103.8690, keywords:['stasiun tanjung enim'] },
 
     // ══════════════════════════════════════════════════════════
     // KAB. EMPAT LAWANG — 10 KECAMATAN
