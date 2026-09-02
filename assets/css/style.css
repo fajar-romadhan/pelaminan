@@ -1485,9 +1485,6 @@ h1 span {
   h1 {
     font-size: 42px;
   }
-  .nav-links {
-    display: none;
-  }
   .auth-wrap {
     grid-template-columns: 1fr;
   }
@@ -1671,39 +1668,86 @@ html, body {
     background: #ffffff;
     flex-direction: column;
     align-items: stretch;
-    padding: 20px 24px;
-    gap: 16px;
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 10px 30px rgba(54, 34, 23, 0.12);
-    z-index: 100;
+    padding: 16px 20px;
+    gap: 12px;
+    border-bottom: 2px solid var(--terracotta);
+    box-shadow: 0 16px 36px rgba(54, 34, 23, 0.16);
+    z-index: 9999;
   }
 
   .nav-drawer.is-open {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-drawer .nav-links {
+    display: flex !important;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: stretch;
+    gap: 4px;
     width: 100%;
   }
 
   .nav-drawer .nav-links a {
+    display: flex !important;
+    align-items: center;
     width: 100%;
-    padding: 10px 0;
-    font-size: 16px;
-    border-bottom: 1px solid var(--border-subtle);
+    padding: 11px 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--espresso);
+    border-radius: 10px;
+    border-bottom: 1px solid rgba(54, 34, 23, 0.06);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .nav-drawer .nav-links a:hover,
+  .nav-drawer .nav-links a.active {
+    background: rgba(216, 133, 78, 0.12);
+    color: var(--terracotta-dark);
+    font-weight: 700;
+  }
+
+  .nav-drawer .nav-links a.active:after {
+    display: none;
   }
 
   .nav-drawer .actions {
+    display: flex !important;
     flex-direction: column;
     width: 100%;
     gap: 10px;
+    margin-top: 6px;
+    padding-top: 12px;
+    border-top: 1.5px dashed rgba(216, 133, 78, 0.25);
+  }
+
+  .nav-drawer .actions .nav-bell-link {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 14px;
+    background: rgba(216, 133, 78, 0.1);
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-drawer .actions .badge {
+    width: 100%;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 13px;
+    justify-content: center;
+    display: flex;
   }
 
   .nav-drawer .actions .btn {
     width: 100%;
+    text-align: center;
+    padding: 11px 16px;
+    font-size: 14px;
+    border-radius: 12px;
   }
 
   .admin-layout {
