@@ -2,8 +2,10 @@
 # .gitignore - Pelaminan Family
 # ============================================================
 
-# ---- File konfigurasi lokal (JANGAN di-push ke GitHub) ----
+# ---- File konfigurasi lokal & rahasia (JANGAN di-push ke GitHub) ----
 config/database.php
+config/mail.php
+
 
 # ---- File upload user (besar, tidak perlu di-repo) ----
 # CATATAN: uploads/ dikecualikan agar foto produk tidak memenuhi repo.

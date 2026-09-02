@@ -223,7 +223,25 @@ CREATE TABLE activity_logs (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE password_resets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(120) NOT NULL,
+  role ENUM('admin','customer') NOT NULL DEFAULT 'customer',
+  token VARCHAR(100) NOT NULL UNIQUE,
+  otp_code VARCHAR(10) NOT NULL,
+  otp_expires_at DATETIME NOT NULL,
+  is_verified TINYINT(1) NOT NULL DEFAULT 0,
+  attempts INT NOT NULL DEFAULT 0,
+  resend_cooldown_until DATETIME NULL,
+  expires_at DATETIME NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_reset_email (email),
+  INDEX idx_reset_token (token),
+  INDEX idx_reset_otp (otp_code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- INITIAL SEED DATA
+
 
 INSERT INTO users(name, phone, email, address, password, role) VALUES
 ('Muhammad Dani', '081273400312', 'danimuh816@gmail.com', 'Palembang', '$2y$12$b4L2fsRiztedSKj4fx2QFOVe6k2RIhbQuR4L7/xMFYZ08A6y7YHSK', 'admin'),

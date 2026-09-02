@@ -8,6 +8,7 @@ if (is_logged_in()) {
 
 $token = trim($_GET['token'] ?? '');
 $invalid_token = false;
+$not_verified = false;
 $reset_data = null;
 $user = null;
 
@@ -20,6 +21,10 @@ if (empty($token)) {
 
     if (!$reset_data) {
         $invalid_token = true;
+    } elseif ((int)$reset_data['is_verified'] !== 1) {
+        // Must verify OTP first
+        set_flash('warning', 'Harap lakukan verifikasi kode OTP terlebih dahulu sebelum membuat password baru.');
+        redirect(BASE_URL . '/verify-otp.php?token=' . urlencode($token));
     } else {
         $userStmt = $pdo->prepare('SELECT id, name, email, role FROM users WHERE email = ? AND role = ? LIMIT 1');
         $userStmt->execute([$reset_data['email'], $reset_data['role']]);
@@ -57,11 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$invalid_token && $user) {
         $updateStmt = $pdo->prepare('UPDATE users SET password = ? WHERE id = ?');
         $updateStmt->execute([$new_hash, $user['id']]);
 
-        // Delete used token
-        $delStmt = $pdo->prepare('DELETE FROM password_resets WHERE token = ?');
-        $delStmt->execute([$token]);
+        // Delete used reset tokens for this email & role
+        $delStmt = $pdo->prepare('DELETE FROM password_resets WHERE email = ? AND role = ?');
+        $delStmt->execute([$user['email'], $user['role']]);
 
-        set_flash('success', 'Password Anda berhasil diperbarui! Silakan masuk menggunakan password baru Anda.');
+        unset($_SESSION['reset_otp_token']);
+
+        // Send confirmation email
+        @send_password_changed_email($user['email'], $user['name'], $user['role']);
+
+        set_flash('success', 'Selamat! Password Anda berhasil diperbarui. Silakan masuk menggunakan password baru Anda.');
         redirect(BASE_URL . '/login.php');
     } catch (PDOException $e) {
         set_flash('danger', 'Gagal memperbarui password. Silakan coba lagi.');
@@ -165,9 +175,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$invalid_token && $user) {
     <?php if ($invalid_token): ?>
       <div style="text-align:center;padding:10px 0;">
         <div style="font-size:44px;margin-bottom:10px;">⚠️</div>
-        <h4 style="color:#b91c1c;margin:0 0 8px;font-size:16px;">Link Reset Tidak Valid atau Kadaluarsa</h4>
+        <h4 style="color:#b91c1c;margin:0 0 8px;font-size:16px;">Sesi Reset Tidak Valid atau Kadaluarsa</h4>
         <p style="font-size:13px;color:#666;margin:0 0 20px;line-height:1.5;">
-          Link reset password yang Anda gunakan telah kadaluarsa atau tidak ditemukan dalam sistem. Silakan ajukan ulang permintaan reset.
+          Sesi reset password yang Anda gunakan telah kadaluarsa atau tidak ditemukan dalam sistem. Silakan ajukan ulang permintaan reset.
         </p>
         <a href="<?= BASE_URL ?>/forgot-password.php" class="btn btn-primary btn-block" style="padding:12px;font-size:14px;font-weight:700;border-radius:12px;display:block;text-decoration:none;">
           ← Ajukan Ulang Reset Password
@@ -185,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$invalid_token && $user) {
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-weight:700;font-size:12.5px;color:var(--espresso);margin-bottom:6px;display:block;">Password Baru</label>
           <div style="position:relative;">
-            <input class="input" type="password" id="new_password" name="password" required minlength="6" placeholder="••••••••" style="padding-right:42px;border-radius:12px;">
+            <input class="input" type="password" id="new_password" name="password" required minlength="6" placeholder="Minimal 6 karakter" style="padding-right:42px;border-radius:12px;">
             <button type="button" class="btn-toggle-pwd" data-target="new_password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:#777;padding:4px;" title="Tampilkan/Sembunyikan Password" aria-label="Tampilkan Password">
               👁️
             </button>
@@ -195,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$invalid_token && $user) {
         <div class="form-group" style="margin-bottom:22px;">
           <label style="font-weight:700;font-size:12.5px;color:var(--espresso);margin-bottom:6px;display:block;">Konfirmasi Password Baru</label>
           <div style="position:relative;">
-            <input class="input" type="password" id="confirm_new_password" name="confirm_password" required minlength="6" placeholder="••••••••" style="padding-right:42px;border-radius:12px;">
+            <input class="input" type="password" id="confirm_new_password" name="confirm_password" required minlength="6" placeholder="Ulangi password baru" style="padding-right:42px;border-radius:12px;">
             <button type="button" class="btn-toggle-pwd" data-target="confirm_new_password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:#777;padding:4px;" title="Tampilkan/Sembunyikan Password" aria-label="Tampilkan Password">
               👁️
             </button>

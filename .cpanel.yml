@@ -11,13 +11,18 @@
 
 deployment:
   tasks:
-    - /bin/cp -rf checkout.php customization.php forgot-password.php gallery.php index.php invoice.php login.php logout.php my-orders.php notifications.php order.php payment.php product.php receipt.php register.php reset-password.php sync_products_db.php tracking.php database.sql /home/pelamina/public_html/
+    - /bin/cp -rf checkout.php customization.php forgot-password.php gallery.php index.php invoice.php login.php logout.php my-orders.php notifications.php order.php payment.php product.php receipt.php register.php reset-password.php verify-otp.php sync_products_db.php tracking.php database.sql /home/pelamina/public_html/
     - /bin/cp -rf admin /home/pelamina/public_html/
     - /bin/cp -rf assets /home/pelamina/public_html/
     - /bin/cp -rf includes /home/pelamina/public_html/
     - /bin/cp -rf uploads /home/pelamina/public_html/
     - /bin/cp -rf config/helpers.php /home/pelamina/public_html/config/
     - /bin/cp -rf config/settings.php /home/pelamina/public_html/config/
+    - /bin/cp -rf config/mailer.php /home/pelamina/public_html/config/
+    - /bin/cp -rf config/mail.example.php /home/pelamina/public_html/config/
+    - /bin/sh -c 'if [ -f config/mail.php ]; then /bin/cp -rf config/mail.php /home/pelamina/public_html/config/; fi'
+
+
     - /bin/cp -rf .htaccess /home/pelamina/public_html/
     - /bin/chmod 755 /home/pelamina/public_html/uploads/
     - /bin/chmod 755 /home/pelamina/public_html/uploads/products/

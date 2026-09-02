@@ -6,23 +6,45 @@ if (is_logged_in()) {
     redirect(current_user()['role'] === 'admin' ? BASE_URL . '/admin/index.php' : BASE_URL . '/index.php');
 }
 
-// Auto-create password_resets table if not exists
+// Auto-migration: create table and columns if not exists
 try {
     $pdo->exec("CREATE TABLE IF NOT EXISTS password_resets (
         id INT AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(120) NOT NULL,
         role ENUM('admin','customer') NOT NULL DEFAULT 'customer',
         token VARCHAR(100) NOT NULL UNIQUE,
+        otp_code VARCHAR(10) NOT NULL,
+        otp_expires_at DATETIME NOT NULL,
+        is_verified TINYINT(1) NOT NULL DEFAULT 0,
+        attempts INT NOT NULL DEFAULT 0,
+        resend_cooldown_until DATETIME NULL,
         expires_at DATETIME NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         INDEX idx_reset_email (email),
-        INDEX idx_reset_token (token)
+        INDEX idx_reset_token (token),
+        INDEX idx_reset_otp (otp_code)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-} catch (Exception $e) {
-    // Ignore if table exists or permission issue
-}
 
-$reset_info = null;
+    // Check & add columns if old table existed without OTP columns
+    $cols = $pdo->query("SHOW COLUMNS FROM password_resets")->fetchAll(PDO::FETCH_COLUMN);
+    if (!in_array('otp_code', $cols)) {
+        $pdo->exec("ALTER TABLE password_resets ADD COLUMN otp_code VARCHAR(10) NOT NULL AFTER token");
+    }
+    if (!in_array('otp_expires_at', $cols)) {
+        $pdo->exec("ALTER TABLE password_resets ADD COLUMN otp_expires_at DATETIME NOT NULL AFTER otp_code");
+    }
+    if (!in_array('is_verified', $cols)) {
+        $pdo->exec("ALTER TABLE password_resets ADD COLUMN is_verified TINYINT(1) NOT NULL DEFAULT 0 AFTER otp_expires_at");
+    }
+    if (!in_array('attempts', $cols)) {
+        $pdo->exec("ALTER TABLE password_resets ADD COLUMN attempts INT NOT NULL DEFAULT 0 AFTER is_verified");
+    }
+    if (!in_array('resend_cooldown_until', $cols)) {
+        $pdo->exec("ALTER TABLE password_resets ADD COLUMN resend_cooldown_until DATETIME NULL AFTER attempts");
+    }
+} catch (Exception $e) {
+    // Ignore if table/columns already exist
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf_token($_POST['csrf_token'] ?? null);
@@ -36,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        set_flash('danger', 'Format email tidak valid.');
+        set_flash('danger', 'Format alamat email tidak valid.');
         redirect(BASE_URL . '/forgot-password.php');
     }
 
@@ -47,32 +69,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$user) {
         $role_label = ($role === 'admin') ? 'Admin' : 'Customer';
-        set_flash('danger', 'Email tidak terdaftar untuk akses akun ' . $role_label . '. Periksa kembali email dan role pilihan Anda.');
+        set_flash('danger', 'Email tidak terdaftar untuk akun ' . $role_label . '. Periksa kembali email dan role pilihan Anda.');
         redirect(BASE_URL . '/forgot-password.php');
     }
 
-    // Generate secure token valid for 1 hour
+    // Generate secure 6-digit numeric OTP & session token
+    $otp_code = sprintf('%06d', random_int(100000, 999999));
     $token = bin2hex(random_bytes(32));
+    $otp_expires_at = date('Y-m-d H:i:s', strtotime('+10 minutes'));
     $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
+    $cooldown_until = date('Y-m-d H:i:s', strtotime('+60 seconds'));
 
-    // Remove older reset requests for this email & role
+    // Remove old reset requests for this email & role
     $delStmt = $pdo->prepare('DELETE FROM password_resets WHERE email = ? AND role = ?');
     $delStmt->execute([$email, $role]);
 
-    // Insert new token
-    $insStmt = $pdo->prepare('INSERT INTO password_resets (email, role, token, expires_at) VALUES (?, ?, ?, ?)');
-    $insStmt->execute([$email, $role, $token, $expires_at]);
+    // Insert new OTP record
+    $insStmt = $pdo->prepare('INSERT INTO password_resets (email, role, token, otp_code, otp_expires_at, is_verified, attempts, resend_cooldown_until, expires_at) VALUES (?, ?, ?, ?, ?, 0, 0, ?, ?)');
+    $insStmt->execute([$email, $role, $token, $otp_code, $otp_expires_at, $cooldown_until, $expires_at]);
 
-    $reset_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') 
-        . '://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/reset-password.php?token=' . $token;
+    // Send OTP email
+    $mailResult = send_otp_email($user['email'], $user['name'], $otp_code, $user['role'], 10);
 
-    $reset_info = [
-        'name' => $user['name'],
-        'email' => $user['email'],
-        'role' => $user['role'],
-        'url' => $reset_url,
-        'token' => $token
-    ];
+    // Save active token in session for convenience
+    $_SESSION['reset_otp_token'] = $token;
+
+    if ($mailResult['success']) {
+        set_flash('success', 'Kode OTP telah berhasil dikirimkan ke email <strong>' . e($user['email']) . '</strong>. Silakan periksa kotak masuk atau folder spam Anda.');
+    } else {
+        // If mail server is unreachable, provide graceful notice
+        set_flash('warning', 'Permintaan reset dibuat. Jika email tidak masuk, periksa koneksi internet Anda atau hubungi admin.');
+    }
+
+    redirect(BASE_URL . '/verify-otp.php?token=' . urlencode($token));
 }
 ?>
 <!doctype html>
@@ -168,14 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: #ffffff;
       box-shadow: 0 4px 12px rgba(184, 96, 40, 0.28);
     }
-    .reset-success-box {
-      background: #f0fdf4;
-      border: 1.5px solid #bbf7d0;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
@@ -190,23 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="login-card-box">
     <div style="text-align:center;margin-bottom:20px;">
       <h2 style="color:var(--espresso);margin:0 0 4px;font-size:21px;">Lupa Password?</h2>
-      <p style="margin:0;font-size:13px;color:#777;">Masukkan email terdaftar Anda untuk mereset password</p>
+      <p style="margin:0;font-size:13px;color:#777;">Masukkan email terdaftar Anda untuk menerima kode OTP</p>
     </div>
 
     <?= flash() ?>
-
-    <?php if ($reset_info): ?>
-      <div class="reset-success-box">
-        <div style="font-size:40px;margin-bottom:8px;">✅</div>
-        <h4 style="margin:0 0 6px;color:#166534;font-size:16px;font-weight:700;">Permintaan Reset Terverifikasi!</h4>
-        <p style="font-size:13px;color:#15803d;margin:0 0 16px;line-height:1.5;">
-          Halo <strong><?= e($reset_info['name']) ?></strong> (Akun <?= ucfirst(e($reset_info['role'])) ?>), link reset password telah dibuat dan berlaku selama 1 jam.
-        </p>
-        <a href="<?= BASE_URL ?>/reset-password.php?token=<?= e($reset_info['token']) ?>" class="btn btn-primary btn-block" style="padding:12px;font-size:14.5px;font-weight:700;border-radius:12px;display:block;text-decoration:none;box-shadow:0 6px 18px rgba(216,133,78,0.28);">
-          🔑 Buat Password Baru Sekarang
-        </a>
-      </div>
-    <?php endif; ?>
 
     <form method="post">
       <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
@@ -221,12 +229,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input class="input" type="email" id="reset_email" name="email" required placeholder="email@example.com" value="<?= e($_POST['email'] ?? '') ?>" style="border-radius:12px;">
       </div>
 
-      <button class="btn btn-primary btn-block" type="submit" style="padding:12px;font-size:15px;font-weight:700;border-radius:12px;box-shadow:0 6px 18px rgba(216,133,78,0.28);">
-        Kirim Link Reset Password
+      <button class="btn btn-primary btn-block" type="submit" style="padding:13px;font-size:15px;font-weight:700;border-radius:12px;box-shadow:0 6px 18px rgba(216,133,78,0.28);display:flex;align-items:center;justify-content:center;gap:8px;">
+        <span>Kirim Kode OTP ke Email</span> <span>➔</span>
       </button>
     </form>
 
-    <p style="text-align:center;font-size:13px;margin-top:20px;margin-bottom:0;color:#666;">
+    <p style="text-align:center;font-size:13px;margin-top:22px;margin-bottom:0;color:#666;">
       Sudah ingat password? <a style="color:var(--terracotta-dark);font-weight:800;" href="<?= BASE_URL ?>/login.php">Kembali ke Halaman Login</a>
     </p>
 
