@@ -594,8 +594,206 @@
     { title:'Kec. Tiga Dihaji — OKU Selatan', subtitle:'Tiga Dihaji, OKU Selatan', lat:-4.4000, lng:104.0500, keywords:['tiga dihaji'] },
     { title:'Kec. Ulu Danau — OKU Selatan', subtitle:'Ulu Danau, OKU Selatan', lat:-4.8200, lng:103.8800, keywords:['ulu danau'] },
     { title:'Kec. Warkuk Ranau Selatan — OKU Selatan', subtitle:'Warkuk Ranau Selatan, OKU Selatan', lat:-4.8000, lng:103.8500, keywords:['warkuk ranau selatan'] },
-    { title:'Danau Ranau', subtitle:'Banding Agung, OKU Selatan & Lampung Barat', lat:-4.8600, lng:103.9200, keywords:['danau ranau','ranau'] }
+    { title:'Danau Ranau', subtitle:'Banding Agung, OKU Selatan & Lampung Barat', lat:-4.8600, lng:103.9200, keywords:['danau ranau','ranau'] },
+
+    // ══════════════════════════════════════════════════════════
+    // PALEMBANG DETAIL — DARI AMPERA KE SELURUH WILAYAH KOTA
+    // ══════════════════════════════════════════════════════════
+
+    // --- AREA AMPERA & SEKITARNYA ---
+    { title:'Jembatan Ampera', subtitle:'Sungai Musi, Palembang', lat:-2.9917, lng:104.7634, keywords:['ampera','jembatan ampera','sungai musi'] },
+    { title:'Benteng Kuto Besak', subtitle:'Jl. Sultan Mahmud Badaruddin, 19 Ilir, Palembang', lat:-2.9881, lng:104.7620, keywords:['benteng kuto besak','bkb','alun alun palembang'] },
+    { title:'Masjid Agung Sultan Mahmud Badaruddin I', subtitle:'19 Ilir, Bukit Kecil, Palembang', lat:-2.9882, lng:104.7601, keywords:['masjid agung palembang','masjid agung smb'] },
+    { title:'Museum Sultan Mahmud Badaruddin II', subtitle:'Jl. Sultan Mahmud Badaruddin, Palembang', lat:-2.9876, lng:104.7625, keywords:['museum smb','museum palembang'] },
+    { title:'Monumen Perjuangan Rakyat (Monpera)', subtitle:'Jl. Merdeka, Palembang', lat:-2.9860, lng:104.7590, keywords:['monpera','monumen palembang'] },
+    { title:'Pasar 16 Ilir', subtitle:'Jl. Jend. Sudirman, 16 Ilir, Palembang', lat:-2.9800, lng:104.7590, keywords:['pasar 16 ilir','pasar 16','16 ilir'] },
+    { title:'Pasar Kuto', subtitle:'Jl. Pasar Kuto, 22 Ilir, Palembang', lat:-2.9870, lng:104.7570, keywords:['pasar kuto','kuto'] },
+    { title:'Pasar Sekanak', subtitle:'Sekanak, Ilir Barat II, Palembang', lat:-2.9900, lng:104.7490, keywords:['pasar sekanak','sekanak'] },
+    { title:'Jl. Merdeka Palembang', subtitle:'Ilir Barat I, Palembang', lat:-2.9860, lng:104.7570, keywords:['jalan merdeka','jl merdeka palembang'] },
+    { title:'Jl. Sudirman Palembang (Simpang Polda)', subtitle:'Jl. Jend. Sudirman, Kemuning, Palembang', lat:-2.9720, lng:104.7520, keywords:['simpang polda','sudirman polda'] },
+    { title:'Jl. Sudirman Palembang (Depan RSMH)', subtitle:'Jl. Jend. Sudirman Km 3.5, Kemuning', lat:-2.9690, lng:104.7510, keywords:['rsmh','rumah sakit hoesin','sudirman rsmh'] },
+    { title:'Jl. Sudirman Palembang (Simpang Charitas)', subtitle:'Jl. Jend. Sudirman, Ilir Timur II', lat:-2.9665, lng:104.7530, keywords:['simpang charitas','rs charitas palembang'] },
+    { title:'RS Charitas Palembang', subtitle:'Jl. Jend. Sudirman, Ilir Timur II, Palembang', lat:-2.9658, lng:104.7531, keywords:['charitas','rs charitas'] },
+    { title:'RSUP Dr. Mohammad Hoesin (RSMH)', subtitle:'Jl. Jend. Sudirman Km 3.5, Kemuning, Palembang', lat:-2.9688, lng:104.7511, keywords:['rsmh','rs hoesin','rumah sakit moh hoesin'] },
+    { title:'RS Pusri Palembang', subtitle:'Jl. Mayor Zen, Sei Selayur, Kalidoni, Palembang', lat:-2.9442, lng:104.7858, keywords:['rs pusri','pusri'] },
+    { title:'RS Bhayangkara Palembang', subtitle:'Jl. Jend. Sudirman Km 4.5, Palembang', lat:-2.9632, lng:104.7549, keywords:['rs bhayangkara','bhayangkara'] },
+
+    // --- ILIR BARAT I ---
+    { title:'Jl. Demang Lebar Daun Palembang', subtitle:'Lorok Pakjo, Ilir Barat I, Palembang', lat:-2.9682, lng:104.7388, keywords:['demang lebar daun','jl demang'] },
+    { title:'Jl. Angkatan 45 Palembang', subtitle:'Lorok Pakjo, Ilir Barat I, Palembang', lat:-2.9771, lng:104.7421, keywords:['angkatan 45'] },
+    { title:'Palembang Square Mall (PS Mall)', subtitle:'Jl. Angkatan 45, Lorok Pakjo, Ilir Barat I', lat:-2.9772, lng:104.7431, keywords:['ps mall','palembang square','ps indah'] },
+    { title:'Perumahan Puri Demang', subtitle:'Jl. Demang Lebar Daun, Lorok Pakjo, Palembang', lat:-2.9685, lng:104.7395, keywords:['puri demang','perumahan puri demang'] },
+    { title:'Kelurahan Lorok Pakjo', subtitle:'Lorok Pakjo, Ilir Barat I, Palembang', lat:-2.9750, lng:104.7380, keywords:['lorok pakjo','pakjo'] },
+    { title:'Kelurahan Bukit Lama', subtitle:'Bukit Lama, Ilir Barat I, Palembang', lat:-2.9840, lng:104.7310, keywords:['bukit lama','ilir barat bukit lama'] },
+    { title:'Jl. Srijaya Negara Palembang', subtitle:'Bukit Lama, Ilir Barat I, Palembang', lat:-2.9840, lng:104.7320, keywords:['srijaya negara','jl srijaya'] },
+    { title:'Universitas Sriwijaya Kampus Bukit', subtitle:'Jl. Srijaya Negara, Bukit Lama', lat:-2.9843, lng:104.7322, keywords:['unsri bukit','kampus bukit unsri'] },
+    { title:'Kelurahan Bukit Baru', subtitle:'Bukit Baru, Ilir Barat I, Palembang', lat:-2.9650, lng:104.7330, keywords:['bukit baru palembang'] },
+    { title:'Perumahan Parameswara', subtitle:'Jl. Parameswara, Bukit Baru, Ilir Barat I', lat:-2.9630, lng:104.7330, keywords:['parameswara','perumahan parameswara'] },
+    { title:'Perumahan Kencana Indah Palembang', subtitle:'Jl. Macan Lindungan, Bukit Baru, Ilir Barat I', lat:-2.9650, lng:104.7350, keywords:['kencana indah','perumahan kencana indah'] },
+    { title:'Perumahan Bukit Sangkal', subtitle:'Bukit Baru, Ilir Barat I, Palembang', lat:-2.9615, lng:104.7295, keywords:['bukit sangkal','perumahan bukit sangkal'] },
+
+    // --- ILIR BARAT II ---
+    { title:'Kelurahan Gandus', subtitle:'Gandus, Ilir Barat II, Palembang', lat:-2.9975, lng:104.7190, keywords:['gandus','kecamatan gandus'] },
+    { title:'Jl. Kol. H. Burlian Palembang', subtitle:'Sukarami, Palembang', lat:-2.9415, lng:104.7055, keywords:['kol burlian','jl burlian','jalan burlian'] },
+    { title:'Perumahan Bukit Sejahtera / Poligon', subtitle:'Jl. Bukit Sejahtera, Gandus, Palembang', lat:-2.9970, lng:104.7210, keywords:['poligon','bukit sejahtera','perumahan poligon'] },
+    { title:'Kelurahan 32 Ilir', subtitle:'32 Ilir, Ilir Barat II, Palembang', lat:-2.9900, lng:104.7460, keywords:['32 ilir'] },
+    { title:'Kelurahan Kemang Manis', subtitle:'Kemang Manis, Ilir Barat II, Palembang', lat:-2.9960, lng:104.7390, keywords:['kemang manis'] },
+
+    // --- KEMUNING ---
+    { title:'Kelurahan Ario Kemuning', subtitle:'Kemuning, Palembang', lat:-2.9680, lng:104.7480, keywords:['ario kemuning','kemuning palembang'] },
+    { title:'Jl. Basuki Rahmat Palembang', subtitle:'Kemuning / Ilir Timur I, Palembang', lat:-2.9706, lng:104.7530, keywords:['basuki rahmat','jl basuki rahmat'] },
+    { title:'Jl. Mayor Salim Batubara', subtitle:'9 Ilir, Ilir Timur I, Palembang', lat:-2.9723, lng:104.7602, keywords:['salim batubara','mayor salim batubara'] },
+
+    // --- ILIR TIMUR I ---
+    { title:'Kelurahan 9 Ilir', subtitle:'9 Ilir, Ilir Timur I, Palembang', lat:-2.9700, lng:104.7600, keywords:['9 ilir'] },
+    { title:'Kelurahan 10 Ilir', subtitle:'10 Ilir, Ilir Timur I, Palembang', lat:-2.9710, lng:104.7630, keywords:['10 ilir'] },
+    { title:'Lotte Mart Palembang', subtitle:'Jl. Basuki Rahmat, 9 Ilir, Ilir Timur I', lat:-2.9700, lng:104.7550, keywords:['lotte mart','lotte palembang'] },
+    { title:'Jl. Kapten A. Rivai', subtitle:'Bukit Kecil, Palembang', lat:-2.9803, lng:104.7502, keywords:['kapten rivai','a rivai','jl rivai'] },
+    { title:'Internasional Plaza (IP Mall)', subtitle:'Jl. Kapten A. Rivai, Bukit Kecil, Palembang', lat:-2.9803, lng:104.7502, keywords:['ip mall','internasional plaza','plaza palembang'] },
+
+    // --- ILIR TIMUR II ---
+    { title:'Kelurahan 8 Ilir', subtitle:'8 Ilir, Ilir Timur II, Palembang', lat:-2.9640, lng:104.7620, keywords:['8 ilir'] },
+    { title:'Palembang Trade Center (PTC Mall)', subtitle:'Jl. R. Sukamto, 8 Ilir, Ilir Timur II', lat:-2.9645, lng:104.7645, keywords:['ptc mall','ptc','palembang trade center'] },
+    { title:'Jl. R. Sukamto Palembang', subtitle:'8 Ilir, Ilir Timur II, Palembang', lat:-2.9643, lng:104.7625, keywords:['r sukamto','jl sukamto','sukamto palembang'] },
+    { title:'Kelurahan 5 Ilir', subtitle:'5 Ilir, Ilir Timur II, Palembang', lat:-2.9600, lng:104.7700, keywords:['5 ilir'] },
+    { title:'Kelurahan 4 Ilir', subtitle:'4 Ilir, Ilir Timur II, Palembang', lat:-2.9570, lng:104.7720, keywords:['4 ilir'] },
+    { title:'Kelurahan 3 Ilir', subtitle:'3 Ilir, Ilir Timur II, Palembang', lat:-2.9560, lng:104.7750, keywords:['3 ilir'] },
+    { title:'Kelurahan 2 Ilir', subtitle:'2 Ilir, Ilir Timur II, Palembang', lat:-2.9540, lng:104.7770, keywords:['2 ilir'] },
+    { title:'Kelurahan 1 Ilir', subtitle:'1 Ilir, Ilir Timur II, Palembang', lat:-2.9520, lng:104.7790, keywords:['1 ilir'] },
+
+    // --- ILIR TIMUR III ---
+    { title:'Kelurahan Sungai Selincah', subtitle:'Sungai Selincah, Ilir Timur III, Palembang', lat:-2.9480, lng:104.7850, keywords:['sungai selincah'] },
+    { title:'Kelurahan Sei Selincah', subtitle:'Sei Selincah, Kalidoni, Palembang', lat:-2.9470, lng:104.7840, keywords:['sei selincah kalidoni'] },
+    { title:'Kelurahan Sungai Lais', subtitle:'Sungai Lais, Kalidoni, Palembang', lat:-2.9500, lng:104.7900, keywords:['sungai lais','sei lais'] },
+
+    // --- KALIDONI ---
+    { title:'Kecamatan Kalidoni', subtitle:'Kalidoni, Palembang', lat:-2.9500, lng:104.7850, keywords:['kalidoni','kecamatan kalidoni'] },
+    { title:'Perumahan Kalidoni Permai', subtitle:'Kalidoni, Palembang', lat:-2.9500, lng:104.7850, keywords:['kalidoni permai','perumahan kalidoni permai'] },
+    { title:'RS Pusri / Perumahan Pusri', subtitle:'Jl. Mayor Zen, Sei Selayur, Kalidoni', lat:-2.9440, lng:104.7862, keywords:['perumahan pusri','griya pusri'] },
+    { title:'Jl. Mayor Zen Palembang', subtitle:'Kalidoni, Palembang', lat:-2.9450, lng:104.7830, keywords:['mayor zen','jl mayor zen'] },
+    { title:'Kelurahan Sei Selayur', subtitle:'Sei Selayur, Kalidoni, Palembang', lat:-2.9470, lng:104.8055, keywords:['sei selayur','sungai selayur'] },
+
+    // --- SAKO (PALEMBANG) ---
+    { title:'Kecamatan Sako Palembang', subtitle:'Sako, Palembang', lat:-2.9200, lng:104.7800, keywords:['sako palembang','kecamatan sako'] },
+    { title:'Kelurahan Sako Palembang', subtitle:'Sako, Kecamatan Sako, Palembang', lat:-2.9200, lng:104.7800, keywords:['kelurahan sako','sako baru'] },
+    { title:'Kelurahan Sialang', subtitle:'Sialang, Sako, Palembang', lat:-2.9150, lng:104.7880, keywords:['sialang','sialang sako'] },
+    { title:'Kelurahan Srijaya', subtitle:'Srijaya, Sako, Palembang', lat:-2.9230, lng:104.7750, keywords:['srijaya sako','kelurahan srijaya'] },
+    { title:'Kelurahan Sukamaju', subtitle:'Sukamaju, Sako, Palembang', lat:-2.9180, lng:104.7820, keywords:['sukamaju sako'] },
+    { title:'Perumahan Taman Kenten', subtitle:'Jl. Lettu Kahar Muzakir, Sako, Palembang', lat:-2.9240, lng:104.7780, keywords:['taman kenten','kenten palembang'] },
+    { title:'Perumahan Sako Kenten', subtitle:'Sako, Palembang', lat:-2.9180, lng:104.7830, keywords:['sako kenten','perumahan sako kenten'] },
+    { title:'SD Negeri 199 Palembang', subtitle:'Sako, Palembang', lat:-2.9210, lng:104.7795, keywords:['sd 199 sako','sekolah sako'] },
+    { title:'Masjid Al-Ittihad Sako', subtitle:'Sako, Palembang', lat:-2.9195, lng:104.7805, keywords:['masjid al ittihad sako'] },
+    { title:'Pasar Sako', subtitle:'Sako, Palembang', lat:-2.9205, lng:104.7810, keywords:['pasar sako','pasar tradisional sako'] },
+
+    // --- SEMATANG BORANG ---
+    { title:'Kecamatan Sematang Borang', subtitle:'Sematang Borang, Palembang', lat:-2.9350, lng:104.6990, keywords:['sematang borang','sematang'] },
+    { title:'Kelurahan Sematang Borang', subtitle:'Sematang Borang, Palembang', lat:-2.9350, lng:104.6990, keywords:['kelurahan sematang borang'] },
+    { title:'Kelurahan Lebung Gajah', subtitle:'Lebung Gajah, Sematang Borang, Palembang', lat:-2.9390, lng:104.6940, keywords:['lebung gajah'] },
+    { title:'Kelurahan Srimulya', subtitle:'Srimulya, Sematang Borang, Palembang', lat:-2.9310, lng:104.7020, keywords:['srimulya','kelurahan srimulya'] },
+    { title:'Kelurahan Srijaya Palembang', subtitle:'Srijaya, Sematang Borang, Palembang', lat:-2.9380, lng:104.7050, keywords:['srijaya sematang'] },
+    { title:'Perumahan Griya Musi Permai', subtitle:'Sematang Borang, Palembang', lat:-2.9300, lng:104.6900, keywords:['griya musi','griya musi permai'] },
+    { title:'Perumahan Bukit Berlian', subtitle:'Sematang Borang, Palembang', lat:-2.9380, lng:104.6980, keywords:['bukit berlian sematang'] },
+    { title:'Jl. Tanjung Api-Api Palembang', subtitle:'Sematang Borang / Sukarami, Palembang', lat:-2.9305, lng:104.6810, keywords:['tanjung api api','jl tanjung api api'] },
+    { title:'Pelaminan Family Zainal (Gudang Utama)', subtitle:'Sematang Borang / Sako, Palembang 30161', lat:-2.9389551, lng:104.8106462, keywords:['pelaminan family','pelaminan zainal','gudang pelaminan','toko pelaminan'] },
+
+    // --- SUKARAMI ---
+    { title:'Kecamatan Sukarami', subtitle:'Sukarami, Palembang', lat:-2.9350, lng:104.7100, keywords:['sukarami','kecamatan sukarami'] },
+    { title:'Kelurahan Sukarami', subtitle:'Sukarami, Palembang', lat:-2.9350, lng:104.7100, keywords:['kelurahan sukarami'] },
+    { title:'Kelurahan Kebun Bunga', subtitle:'Kebun Bunga, Sukarami, Palembang', lat:-2.9400, lng:104.7150, keywords:['kebun bunga palembang','kebun bunga sukarami'] },
+    { title:'Kelurahan Sukajaya', subtitle:'Sukajaya, Sukarami, Palembang', lat:-2.9280, lng:104.7080, keywords:['sukajaya sukarami'] },
+    { title:'Kelurahan Talang Betutu', subtitle:'Talang Betutu, Sukarami, Palembang', lat:-2.8980, lng:104.7010, keywords:['talang betutu'] },
+    { title:'Bandara Sultan Mahmud Badaruddin II', subtitle:'Talang Betutu, Sukarami, Palembang', lat:-2.8972, lng:104.7010, keywords:['bandara palembang','bandara smb','smb2','airport palembang'] },
+    { title:'Kelurahan Sukabangun', subtitle:'Sukabangun, Sukarami, Palembang', lat:-2.9420, lng:104.7050, keywords:['sukabangun'] },
+    { title:'Jl. Lingkaran Selatan / Lingkar Selatan Palembang', subtitle:'Sukarami, Palembang', lat:-2.9450, lng:104.7100, keywords:['lingkaran selatan','lingkar selatan','jl lingkar selatan'] },
+
+    // --- ALANG-ALANG LEBAR ---
+    { title:'Kecamatan Alang-Alang Lebar', subtitle:'Alang-Alang Lebar, Palembang', lat:-2.9500, lng:104.7150, keywords:['alang alang lebar','aal','kecamatan alang alang lebar'] },
+    { title:'Kelurahan Alang-Alang Lebar', subtitle:'Alang-Alang Lebar, Palembang', lat:-2.9500, lng:104.7150, keywords:['kelurahan alang alang lebar'] },
+    { title:'Kelurahan Talang Kelapa Palembang', subtitle:'Talang Kelapa, Alang-Alang Lebar, Palembang', lat:-2.9520, lng:104.7100, keywords:['talang kelapa palembang','perumahan talang kelapa'] },
+    { title:'Kelurahan Karya Baru', subtitle:'Karya Baru, Alang-Alang Lebar, Palembang', lat:-2.9480, lng:104.7200, keywords:['karya baru aal','karya baru palembang'] },
+    { title:'Perumahan Charindoland', subtitle:'Alang-Alang Lebar, Palembang', lat:-2.9480, lng:104.7160, keywords:['charindo','charindoland'] },
+    { title:'Perumahan Griya Candra', subtitle:'Jl. Srijaya Negara, Alang-Alang Lebar', lat:-2.9580, lng:104.7250, keywords:['griya candra','candra indah'] },
+
+    // --- JAKABARING ---
+    { title:'Jakabaring Sport City (JSC)', subtitle:'Jl. Gubernur H. Bastari, Jakabaring, Palembang', lat:-3.0185, lng:104.7890, keywords:['jsc','jakabaring sport city','stadion jakabaring'] },
+    { title:'OPI Mall Jakabaring', subtitle:'Jl. Gubernur H. Bastari, Jakabaring, Palembang', lat:-3.0215, lng:104.7925, keywords:['opi mall','opi jakabaring','mal opi'] },
+    { title:'Perumahan OPI Jakabaring', subtitle:'Komplek OPI, Jakabaring, Palembang', lat:-3.0210, lng:104.7920, keywords:['perumahan opi','opi regency','komplek opi jakabaring'] },
+    { title:'Danau OPI Jakabaring', subtitle:'Jakabaring, Palembang', lat:-3.0250, lng:104.7900, keywords:['danau opi','wisata danau opi'] },
+    { title:'Kelurahan Silaberanti', subtitle:'Silaberanti, Jakabaring, Palembang', lat:-2.9945, lng:104.7755, keywords:['silaberanti'] },
+    { title:'Kelurahan 15 Ulu', subtitle:'15 Ulu, Seberang Ulu I, Palembang', lat:-3.0490, lng:104.7695, keywords:['15 ulu','kertapati area'] },
+    { title:'Kelurahan 13 Ulu', subtitle:'13 Ulu, Seberang Ulu I, Palembang', lat:-2.9870, lng:104.7734, keywords:['13 ulu'] },
+
+    // --- KERTAPATI ---
+    { title:'Kecamatan Kertapati', subtitle:'Kertapati, Palembang', lat:-3.0080, lng:104.7600, keywords:['kertapati','kecamatan kertapati'] },
+    { title:'Stasiun KA Kertapati', subtitle:'Kemas Rindo, Kertapati, Palembang', lat:-3.0080, lng:104.7580, keywords:['stasiun kertapati','stasiun palembang'] },
+    { title:'Kelurahan Kemas Rindo', subtitle:'Kemas Rindo, Kertapati, Palembang', lat:-3.0155, lng:104.7530, keywords:['kemas rindo'] },
+    { title:'Kelurahan Ogan Baru', subtitle:'Ogan Baru, Kertapati, Palembang', lat:-3.0235, lng:104.7555, keywords:['ogan baru'] },
+
+    // --- PLAJU ---
+    { title:'Kecamatan Plaju', subtitle:'Plaju, Palembang', lat:-2.9980, lng:104.7950, keywords:['plaju','kecamatan plaju'] },
+    { title:'Kelurahan Plaju Ulu', subtitle:'Plaju Ulu, Plaju, Palembang', lat:-2.9980, lng:104.7950, keywords:['plaju ulu'] },
+    { title:'Kelurahan Plaju Darat', subtitle:'Plaju Darat, Plaju, Palembang', lat:-3.0150, lng:104.8150, keywords:['plaju darat'] },
+    { title:'Kelurahan Plaju Ilir', subtitle:'Plaju Ilir, Plaju, Palembang', lat:-2.9940, lng:104.8010, keywords:['plaju ilir'] },
+    { title:'Kelurahan Bagus Kuning', subtitle:'Bagus Kuning, Plaju, Palembang', lat:-2.9900, lng:104.7900, keywords:['bagus kuning'] },
+    { title:'Kelurahan Talang Bubuk', subtitle:'Talang Bubuk, Plaju, Palembang', lat:-3.0050, lng:104.8000, keywords:['talang bubuk'] },
+    { title:'Komplek Pertamina Plaju', subtitle:'Plaju, Palembang', lat:-2.9950, lng:104.8050, keywords:['komplek pertamina plaju','pertamina plaju','perumahan pertamina'] },
+    { title:'Perumahan Taman Sasana Patra', subtitle:'Plaju Darat, Plaju, Palembang', lat:-3.0200, lng:104.8250, keywords:['sasana patra','taman sasana patra'] },
+
+    // ══════════════════════════════════════════════════════════
+    // SAKO (Kec. RAMBUTAN, KAB. BANYUASIN) — DETAIL LENGKAP
+    // Area sekitar: https://maps.app.goo.gl/UpqJTEPrDaqyrPWe6
+    // Koordinat pusat: -3.073, 104.873
+    // ══════════════════════════════════════════════════════════
+    { title:'Desa Sako Rambutan (Pusat)', subtitle:'Sako, Rambutan, Banyuasin, Sumatera Selatan', lat:-3.0730, lng:104.8734, keywords:['sako rambutan','desa sako','sako banyuasin'] },
+    { title:'Masjid Baiturohim Sako Rambutan', subtitle:'Sako, Rambutan, Banyuasin', lat:-3.0742, lng:104.8749, keywords:['masjid baiturohim sako','masjid sako rambutan'] },
+    { title:'Dusun I Desa Sako', subtitle:'Desa Sako, Rambutan, Banyuasin', lat:-3.0715, lng:104.8710, keywords:['dusun 1 sako','dusun i sako'] },
+    { title:'Dusun II Desa Sako', subtitle:'Desa Sako, Rambutan, Banyuasin', lat:-3.0745, lng:104.8750, keywords:['dusun 2 sako','dusun ii sako'] },
+    { title:'Dusun III Desa Sako', subtitle:'Desa Sako, Rambutan, Banyuasin', lat:-3.0760, lng:104.8780, keywords:['dusun 3 sako','dusun iii sako'] },
+    { title:'Jl. Raya Sako Rambutan', subtitle:'Sako, Rambutan, Banyuasin, Sumatera Selatan', lat:-3.0735, lng:104.8720, keywords:['jalan raya sako','jl raya sako rambutan'] },
+    { title:'Toko Nia Sako Rambutan', subtitle:'Sako, Rambutan, Banyuasin 30967', lat:-3.0730, lng:104.8734, keywords:['toko nia sako','nia sako'] },
+    { title:'SD Negeri Sako Rambutan', subtitle:'Sako, Rambutan, Banyuasin', lat:-3.0722, lng:104.8740, keywords:['sd sako rambutan','sekolah sako'] },
+    { title:'Masjid Al-Ikhlas Sako Rambutan', subtitle:'Sako, Rambutan, Banyuasin', lat:-3.0728, lng:104.8729, keywords:['masjid al ikhlas sako','masjid sako'] },
+    { title:'Pasar Sako Rambutan', subtitle:'Sako, Rambutan, Banyuasin', lat:-3.0718, lng:104.8725, keywords:['pasar sako rambutan'] },
+    { title:'Perumahan Musi Palem Indah', subtitle:'Sungai Pinang, Rambutan, Banyuasin 30762', lat:-3.0408, lng:104.8385, keywords:['musi palem indah','perumahan musi palem','palem indah'] },
+    { title:'Perumahan Musi Palem Indah Blok A', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0402, lng:104.8380, keywords:['musi palem blok a','palem indah blok a'] },
+    { title:'Perumahan Musi Palem Indah Blok B', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0405, lng:104.8383, keywords:['musi palem blok b','palem indah blok b'] },
+    { title:'Perumahan Musi Palem Indah Blok C', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0409, lng:104.8387, keywords:['musi palem blok c','palem indah blok c'] },
+    { title:'Perumahan Musi Palem Indah Blok D', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0412, lng:104.8390, keywords:['musi palem blok d','palem indah blok d'] },
+    { title:'Desa Sungai Pinang (Rambutan)', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0420, lng:104.8400, keywords:['sungai pinang rambutan','desa sungai pinang'] },
+    { title:'Jl. Sungai Pinang Rambutan', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0406, lng:104.8378, keywords:['jalan sungai pinang','jl sungai pinang rambutan'] },
+    { title:'Masjid Jami Sungai Pinang', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0415, lng:104.8392, keywords:['masjid jami sungai pinang'] },
+    { title:'Perumahan Sungai Pinang Indah', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0440, lng:104.8420, keywords:['sungai pinang indah','perumahan sungai pinang indah'] },
+    { title:'Perumahan Griya Sungai Pinang', subtitle:'Sungai Pinang, Rambutan, Banyuasin', lat:-3.0460, lng:104.8450, keywords:['griya sungai pinang'] },
+    { title:'Desa Sungai Dua Rambutan', subtitle:'Sungai Dua, Rambutan, Banyuasin', lat:-3.0570, lng:104.8635, keywords:['sungai dua rambutan','desa sungai dua'] },
+    { title:'Kantor Desa Sungai Dua', subtitle:'Sungai Dua, Rambutan, Banyuasin', lat:-3.0570, lng:104.8634, keywords:['kantor desa sungai dua'] },
+    { title:'Masjid Taufiqurrahman Sungai Dua', subtitle:'Sungai Dua, Rambutan, Banyuasin', lat:-3.0571, lng:104.8629, keywords:['masjid taufiqurrahman sungai dua'] },
+    { title:'Masjid Al-Muttaqin Sungai Dua', subtitle:'Sungai Dua, Rambutan, Banyuasin', lat:-3.0541, lng:104.8632, keywords:['masjid al muttaqin sungai dua'] },
+    { title:'Desa Gelebak Dalam Rambutan', subtitle:'Gelebak Dalam, Rambutan, Banyuasin', lat:-3.0855, lng:104.8653, keywords:['gelebak dalam rambutan','desa gelebak dalam'] },
+    { title:'Pangkalan Gelebak', subtitle:'Pangkalan Gelebak, Rambutan, Banyuasin', lat:-3.0659, lng:104.8625, keywords:['pangkalan gelebak'] },
+    { title:'Masjid Pembela Agung Alhusna Gelebak', subtitle:'Pangkalan Gelebak, Rambutan, Banyuasin', lat:-3.0671, lng:104.8624, keywords:['masjid alhusna gelebak','masjid pembela agung'] },
+    { title:'Desa Menten Rambutan', subtitle:'Menten, Rambutan, Banyuasin', lat:-3.0587, lng:104.8892, keywords:['menten rambutan','desa menten'] },
+    { title:'Desa Suko Pindah Rambutan', subtitle:'Suka Pindah, Rambutan, Banyuasin', lat:-3.0375, lng:104.9700, keywords:['suka pindah rambutan','suko pindah'] },
+    { title:'Desa Kebun Sahang Rambutan', subtitle:'Kebun Sahang, Rambutan, Banyuasin', lat:-3.1175, lng:104.9999, keywords:['kebun sahang rambutan','kebon sahang'] },
+    { title:'Desa Rambutan (Ibukota Kecamatan)', subtitle:'Rambutan, Banyuasin', lat:-3.1292, lng:104.9326, keywords:['desa rambutan','ibukota rambutan'] },
+    { title:'Desa Tanah Lembak Rambutan', subtitle:'Tanah Lembak, Rambutan, Banyuasin', lat:-3.1385, lng:104.9699, keywords:['tanah lembak rambutan'] },
+    { title:'Desa Durian Gadis Rambutan', subtitle:'Durian Gadis, Rambutan, Banyuasin', lat:-3.0285, lng:104.9495, keywords:['durian gadis rambutan'] },
+    { title:'Desa Tanjungan Rambutan', subtitle:'Tanjungan, Rambutan, Banyuasin', lat:-3.1400, lng:104.8800, keywords:['tanjungan rambutan','desa tanjungan'] },
+    { title:'Desa Tanjung Merbu Rambutan', subtitle:'Tanjung Merbu, Rambutan, Banyuasin', lat:-3.0857, lng:104.9017, keywords:['tanjung merbu rambutan'] },
+    { title:'Desa Suko Vokasi Rambutan', subtitle:'Suko Vokasi, Rambutan, Banyuasin', lat:-3.0950, lng:104.8650, keywords:['suko vokasi','suka vokasi rambutan'] },
+    { title:'Desa Dusun Baru Rambutan', subtitle:'Dusun Baru, Rambutan, Banyuasin', lat:-3.0024, lng:104.9785, keywords:['dusun baru rambutan','desa baru rambutan'] },
+    { title:'Desa Sako Suban Rambutan', subtitle:'Sako Suban, Rambutan, Banyuasin', lat:-3.0850, lng:104.8800, keywords:['sako suban rambutan'] },
+    { title:'Desa Parit Rambutan', subtitle:'Parit, Rambutan, Banyuasin', lat:-3.0624, lng:104.9535, keywords:['desa parit rambutan','parit rambutan'] },
+    { title:'Desa Simpang Empat Rambutan', subtitle:'Simpang Empat, Rambutan, Banyuasin', lat:-3.1554, lng:104.8289, keywords:['simpang empat rambutan'] },
+    { title:'Desa Pelaju Rambutan', subtitle:'Pelaju, Rambutan, Banyuasin', lat:-3.0563, lng:104.9818, keywords:['pelaju rambutan','desa pelaju'] },
+    { title:'Desa Terusan Jawa Rambutan', subtitle:'Terusan Jawa, Rambutan, Banyuasin', lat:-3.1638, lng:104.8521, keywords:['terusan jawa rambutan'] },
+    { title:'Desa Muara Batun Rambutan', subtitle:'Muara Batun, Rambutan, Banyuasin', lat:-3.1841, lng:104.8469, keywords:['muara batun rambutan'] },
+    { title:'Desa Sungai Rasau Rambutan', subtitle:'Sungai Rasau, Rambutan, Banyuasin', lat:-3.0889, lng:104.8267, keywords:['sungai rasau rambutan'] },
+    { title:'Perumahan Rambutan Asri', subtitle:'Sungai Kedukan / Rambutan, Banyuasin', lat:-3.0500, lng:104.8350, keywords:['rambutan asri','perumahan rambutan asri'] },
+    { title:'Perumahan Graha Sungai Kedukan', subtitle:'Sungai Kedukan, Rambutan, Banyuasin', lat:-3.0520, lng:104.8300, keywords:['graha sungai kedukan'] },
+    { title:'Desa Sungai Kedukan Rambutan', subtitle:'Sungai Kedukan, Rambutan, Banyuasin', lat:-3.0550, lng:104.8250, keywords:['sungai kedukan rambutan','desa sungai kedukan'] },
+    { title:'Perumahan OPI Indah Sungai Kedukan', subtitle:'Sungai Kedukan, Rambutan, Banyuasin', lat:-3.0450, lng:104.8100, keywords:['opi indah sungai kedukan','perumahan opi indah'] }
   ];
+
 
   // ============================================================
   // CACHE (5 menit TTL)
