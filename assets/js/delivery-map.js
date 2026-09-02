@@ -841,21 +841,35 @@
       var selPickup = 'diantar';
       pickupRadios.forEach(function(r) { if (r.checked) selPickup = r.value; });
 
-      var distKm = calculateHaversineKm(STORE_LAT, STORE_LNG, lat, lng);
-      var cost = (selPickup === 'diantar') ? calculateShippingCost(distKm) : 0;
-
       var badgeEl = document.getElementById('shipping-distance-badge');
       var distEl = document.getElementById('distance-km-display');
       var costEl = document.getElementById('shipping-cost-display');
       var distInput = document.getElementById('delivery_distance_km');
       var costInput = document.getElementById('shipping_cost_input');
+      var displayShippingCost = document.getElementById('displayShippingCost');
+      var displaySubtotal = document.getElementById('displaySubtotal');
+      var displayGrandTotal = document.getElementById('displayGrandTotal');
+      var displayDpAmount = document.getElementById('displayDpAmount');
+      var subtotalVal = displaySubtotal ? (parseFloat(displaySubtotal.getAttribute('data-value')) || 0) : 0;
+
+      // ── Jika user belum memilih lokasi, tampilkan Rp 0 tanpa hitung jarak ──
+      if (!hasSelectedLocation || selPickup === 'diambil') {
+        if (badgeEl) badgeEl.style.display = 'none';
+        if (distInput) distInput.value = '0';
+        if (costInput) costInput.value = '0';
+        if (displayShippingCost) displayShippingCost.textContent = 'Rp 0';
+        var baseTotal = subtotalVal;
+        if (displayGrandTotal) displayGrandTotal.textContent = 'Rp ' + baseTotal.toLocaleString('id-ID');
+        if (displayDpAmount) displayDpAmount.textContent = 'Rp ' + (baseTotal * 0.5).toLocaleString('id-ID');
+        return;
+      }
+
+      var distKm = calculateHaversineKm(STORE_LAT, STORE_LNG, lat, lng);
+      var cost = calculateShippingCost(distKm);
 
       if (distEl) distEl.textContent = distKm.toFixed(1) + ' km';
       if (costEl) {
-        if (selPickup === 'diambil') {
-          costEl.textContent = 'Rp 0 (Diambil Sendiri)';
-          costEl.style.color = '#27ae60';
-        } else if (cost === 0) {
+        if (cost === 0) {
           costEl.textContent = 'Rp 0 (GRATIS Area Dekat Workshop)';
           costEl.style.color = '#27ae60';
         } else {
@@ -864,33 +878,18 @@
         }
       }
 
-      if (badgeEl) {
-        badgeEl.style.display = selPickup === 'diantar' ? 'block' : 'none';
-      }
-
-      if (distInput) distInput.value = (selPickup === 'diantar') ? distKm.toFixed(2) : '0';
+      if (badgeEl) badgeEl.style.display = 'block';
+      if (distInput) distInput.value = distKm.toFixed(2);
       if (costInput) costInput.value = cost;
 
-      // Directly update Order Summary Sidebar Elements
-      var displayShippingCost = document.getElementById('displayShippingCost');
-      var displaySubtotal = document.getElementById('displaySubtotal');
-      var displayGrandTotal = document.getElementById('displayGrandTotal');
-      var displayDpAmount = document.getElementById('displayDpAmount');
-
       if (displayShippingCost) {
-        displayShippingCost.textContent = (cost === 0 || selPickup === 'diambil') ? 'Rp 0' : ('Rp ' + cost.toLocaleString('id-ID'));
+        displayShippingCost.textContent = cost === 0 ? 'Rp 0' : ('Rp ' + cost.toLocaleString('id-ID'));
       }
 
-      var subtotalVal = displaySubtotal ? (parseFloat(displaySubtotal.getAttribute('data-value')) || 0) : 0;
-      var grandTotal = subtotalVal + (selPickup === 'diantar' ? cost : 0);
+      var grandTotal = subtotalVal + cost;
       var dpAmount = grandTotal * 0.5;
-
-      if (displayGrandTotal) {
-        displayGrandTotal.textContent = 'Rp ' + grandTotal.toLocaleString('id-ID');
-      }
-      if (displayDpAmount) {
-        displayDpAmount.textContent = 'Rp ' + dpAmount.toLocaleString('id-ID');
-      }
+      if (displayGrandTotal) displayGrandTotal.textContent = 'Rp ' + grandTotal.toLocaleString('id-ID');
+      if (displayDpAmount) displayDpAmount.textContent = 'Rp ' + dpAmount.toLocaleString('id-ID');
     }
 
     function updateLocation(lat, lng, fetchAddress) {
