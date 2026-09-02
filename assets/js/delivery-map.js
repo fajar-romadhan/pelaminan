@@ -1383,11 +1383,10 @@
       // ── DYNAMIC ROTATING PLACEHOLDER (TYPEWRITER ANIMATION) ──
       var clearBtn = document.getElementById('btn-clear-map-search');
       var searchPhrases = [
-        "Ketik nama perumahan (misal: Perumahan Musi Palem Indah)...",
         "Ketik nama jalan (misal: Jl. Jendral Sudirman Palembang)...",
+        "Ketik perumahan (misal: Perumahan Kencana Indah Palembang)...",
         "Ketik toko / ruko (misal: Toko Nia Sako Rambutan)...",
         "Ketik patokan lokasi (misal: Dekat Jembatan Ampera)...",
-        "Ketik perumahan (misal: Perumahan Kencana Indah Palembang)...",
         "Ketik nama gedung / mall (misal: OPI Mall Jakabaring)...",
         "Ketik nama masjid (misal: Masjid Baiturohim Sako)...",
         "Ketik nama kelurahan (misal: Sematang Borang, Palembang)..."
