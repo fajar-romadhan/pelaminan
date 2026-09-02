@@ -192,14 +192,14 @@ function send_via_smtp_socket($toEmail, $toName, $subject, $htmlBody, $plainBody
         // Plain text part
         $messageBody .= "--{$boundary}\r\n";
         $messageBody .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $messageBody .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
-        $messageBody .= $plainBody . "\r\n\r\n";
+        $messageBody .= "Content-Transfer-Encoding: base64\r\n\r\n";
+        $messageBody .= chunk_split(base64_encode($plainBody)) . "\r\n";
 
         // HTML part
         $messageBody .= "--{$boundary}\r\n";
         $messageBody .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $messageBody .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
-        $messageBody .= $htmlBody . "\r\n\r\n";
+        $messageBody .= "Content-Transfer-Encoding: base64\r\n\r\n";
+        $messageBody .= chunk_split(base64_encode($htmlBody)) . "\r\n";
 
         $messageBody .= "--{$boundary}--\r\n";
         $messageBody .= ".";
@@ -238,14 +238,15 @@ function send_via_native_mail($toEmail, $toName, $subject, $htmlBody, $plainBody
 
     $message = "--{$boundary}\r\n";
     $message .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
-    $message .= $plainBody . "\r\n\r\n";
+    $message .= "Content-Transfer-Encoding: base64\r\n\r\n";
+    $message .= chunk_split(base64_encode($plainBody)) . "\r\n";
 
     $message .= "--{$boundary}\r\n";
     $message .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
-    $message .= $htmlBody . "\r\n\r\n";
+    $message .= "Content-Transfer-Encoding: base64\r\n\r\n";
+    $message .= chunk_split(base64_encode($htmlBody)) . "\r\n";
     $message .= "--{$boundary}--";
+
 
     $encodedSubject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
     $toFormatted = "=?UTF-8?B?" . base64_encode($toName) . "?= <{$toEmail}>";
