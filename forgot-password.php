@@ -42,9 +42,10 @@ try {
     if (!in_array('resend_cooldown_until', $cols)) {
         $pdo->exec("ALTER TABLE password_resets ADD COLUMN resend_cooldown_until DATETIME NULL AFTER attempts");
     }
-} catch (Exception $e) {
+} catch (Throwable $e) {
     // Ignore if table/columns already exist
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf_token($_POST['csrf_token'] ?? null);

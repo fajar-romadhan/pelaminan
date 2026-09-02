@@ -24,7 +24,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/mailer.php';
+if (file_exists(__DIR__ . '/mailer.php')) {
+    require_once __DIR__ . '/mailer.php';
+}
+
 
 
 function e($value): string {
