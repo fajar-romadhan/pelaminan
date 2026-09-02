@@ -976,79 +976,152 @@
     setupMap(0);
 
     // ── REVERSE GEOCODE ──
+    // ── Haversine sederhana untuk cari landmark terdekat ──
+    function haversineSimple(lat1, lon1, lat2, lon2) {
+      var R = 6371000; // meter
+      var dLat = (lat2 - lat1) * Math.PI / 180;
+      var dLon = (lon2 - lon1) * Math.PI / 180;
+      var a = Math.sin(dLat/2)*Math.sin(dLat/2) +
+              Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
+              Math.sin(dLon/2)*Math.sin(dLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    // ── Cari landmark terdekat dalam radius maxMeters ──
+    function findNearestLandmark(lat, lng, maxMeters) {
+      var best = null, bestDist = Infinity;
+      LOCAL_LANDMARKS.forEach(function(lm) {
+        var d = haversineSimple(lat, lng, parseFloat(lm.lat), parseFloat(lm.lng));
+        if (d < bestDist) { bestDist = d; best = lm; }
+      });
+      return (best && bestDist <= maxMeters) ? { landmark: best, distM: Math.round(bestDist) } : null;
+    }
+
     function reverseGeocode(lat, lng) {
-      if (mapAddressInput) mapAddressInput.placeholder = 'Membaca nama alamat...';
+      if (mapAddressInput) mapAddressInput.placeholder = 'Membaca detail nama alamat & jalan...';
+
+      // 1. Cek landmark terdekat dari kamus lokal Sumsel
+      var nearLandmark = findNearestLandmark(lat, lng, 350) || findNearestLandmark(lat, lng, 800);
+
+      // 2. Query ArcGIS World Geocode Server (sangat detail untuk nama jalan, toko/tempat, desa, kecamatan)
+      var arcGisUrl = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=json&location=' + lng + ',' + lat + '&distance=1000';
+
+      fetch(arcGisUrl)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var a = (data && data.address) || {};
+          var parts = [];
+
+          var place = a.PlaceName || '';
+          if (!place && a.Addr_type === 'POI') place = a.Match_addr || '';
+          var street = a.Address || '';
+          var neighborhood = a.Neighborhood || '';
+          var city = a.City || '';
+          var subregion = a.Subregion || '';
+          var region = a.Region || '';
+          var postal = a.Postal || '';
+
+          // Jika ada landmark lokal yang sangat dekat (<250m) dan belum ada di place
+          if (nearLandmark && nearLandmark.distM <= 250) {
+            var lmTitle = nearLandmark.landmark.title;
+            if (!place || place.toLowerCase().indexOf(lmTitle.toLowerCase().substring(0, 6)) < 0) {
+              parts.push(nearLandmark.distM <= 50 ? lmTitle : ('Dekat ' + lmTitle));
+            }
+          }
+
+          if (place && parts.indexOf(place) < 0 && (!street || place.toLowerCase() !== street.toLowerCase())) {
+            parts.push(place);
+          }
+
+          if (street && parts.indexOf(street) < 0) {
+            parts.push(street);
+          }
+
+          if (neighborhood && parts.indexOf(neighborhood) < 0) {
+            parts.push(neighborhood);
+          }
+
+          if (city && parts.indexOf(city) < 0) {
+            parts.push(city.toLowerCase().indexOf('kec') >= 0 ? city : ('Kec. ' + city));
+          }
+
+          if (subregion && parts.indexOf(subregion) < 0) {
+            var isKota = (subregion.toLowerCase() === 'palembang' || subregion.toLowerCase() === 'prabumulih' || subregion.toLowerCase() === 'lubuklinggau' || subregion.toLowerCase() === 'pagar alam');
+            parts.push(isKota ? ('Kota ' + subregion) : ('Kab. ' + subregion));
+          }
+
+          if (region && parts.indexOf(region) < 0) {
+            parts.push(region);
+          }
+
+          if (postal && parts.indexOf(postal) < 0) {
+            parts.push(postal);
+          }
+
+          var formattedAddress = parts.join(', ');
+
+          if (!formattedAddress || parts.length < 2) {
+            // Jika ArcGIS tidak lengkap, fallback ke Nominatim
+            fallbackNominatim(lat, lng, nearLandmark);
+            return;
+          }
+
+          applyAddressResult(lat, lng, formattedAddress);
+        })
+        .catch(function () {
+          fallbackNominatim(lat, lng, nearLandmark);
+        });
+    }
+
+    function fallbackNominatim(lat, lng, nearLandmark) {
       fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng + '&addressdetails=1', { headers: { 'Accept-Language': 'id,en;q=0.8' } })
         .then(function (r) { return r.json(); })
         .then(function (data) {
           var addr = data.address || {};
-
-          // Susun alamat yang bersih: Kelurahan/Desa → Kecamatan → Kab/Kota → Provinsi
-          // Tanpa nomor rumah, RT/RW, nama jalan, agar lebih ringkas & jelas
           var parts = [];
 
-          // Level 1: Nama perumahan / dusun / hamlet (jika ada)
-          var place = addr.hamlet || addr.neighbourhood || addr.allotments || '';
-          if (place) parts.push(place);
-
-          // Level 2: Kelurahan / Desa / Village / Suburb
-          var village = addr.village || addr.suburb || addr.city_district || addr.quarter || '';
-          if (village && village !== place) parts.push(village);
-
-          // Level 3: Kecamatan
-          var district = addr.town || addr.municipality || '';
-          // Dari Nominatim "state_district" atau prase manual dari county
-          var county = addr.county || '';      // biasanya "Kabupaten ..." atau "Kota ..."
-          var subdistrict = addr.city_district || addr.district || '';
-
-          // Untuk Sumsel, Nominatim sering pakai: state_district = Kabupaten
-          // dan county = Kecamatan. Kita normalkan.
-          // Coba ambil kecamatan dari county (bisa berisi "Kecamatan Sako" dsb)
-          if (county && county.toLowerCase().indexOf('kecamatan') >= 0) {
-            parts.push(county);
-          } else if (district) {
-            parts.push(district);
-          } else if (subdistrict && subdistrict !== village) {
-            parts.push(subdistrict);
+          if (nearLandmark && nearLandmark.distM <= 300) {
+            parts.push(nearLandmark.distM <= 50 ? nearLandmark.landmark.title : ('Dekat ' + nearLandmark.landmark.title));
           }
 
-          // Level 4: Kabupaten / Kota
-          var city = addr.city || addr.state_district || county || '';
-          if (city && parts.indexOf(city) < 0 && city.toLowerCase().indexOf('kecamatan') < 0) {
-            parts.push(city);
+          var road = addr.road || addr.street || addr.pedestrian || addr.residential || '';
+          if (road && parts.indexOf(road) < 0) parts.push(road);
+
+          var village = addr.village || addr.suburb || addr.quarter || addr.hamlet || '';
+          if (village && parts.indexOf(village) < 0) parts.push(village);
+
+          var district = addr.municipality || addr.town || addr.city_district || '';
+          if (district && parts.indexOf(district) < 0) {
+            parts.push(district.toLowerCase().indexOf('kec') >= 0 ? district : ('Kec. ' + district));
           }
 
-          // Level 5: Provinsi
+          var county = addr.county || addr.city || addr.state_district || '';
+          if (county && parts.indexOf(county) < 0) parts.push(county);
+
           var state = addr.state || '';
           if (state && parts.indexOf(state) < 0) parts.push(state);
 
-          // Jika semua kosong, fallback ke display_name tapi potong bagian pertama (detail jalan)
-          var address;
-          if (parts.length >= 2) {
-            address = parts.join(', ');
-          } else if (data.display_name) {
-            // Potong bagian depan (nomor, jalan, RT/RW) — ambil dari bagian ketiga seterusnya
-            var segments = data.display_name.split(', ');
-            // Cari indeks pertama yang kemungkinan kelurahan/desa (biasanya ≥ indeks 2-4)
-            var start = 0;
-            for (var i = 0; i < segments.length; i++) {
-              // Lewati segmen yang mengandung angka (nomor jalan, RT/RW)
-              if (/\d/.test(segments[i]) || segments[i].length <= 3) { start = i + 1; }
-              else { start = i; break; }
-            }
-            address = segments.slice(start, start + 5).join(', ');
-          } else {
-            address = 'Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6);
-          }
+          var postcode = addr.postcode || '';
+          if (postcode && parts.indexOf(postcode) < 0) parts.push(postcode);
 
-          lastValidLat = lat; lastValidLng = lng; currentLat = lat; currentLng = lng; hasSelectedLocation = true;
-          if (latInput) latInput.value = lat.toFixed(7);
-          if (lngInput) lngInput.value = lng.toFixed(7);
-          if (mapAddressInput) mapAddressInput.value = address;
-          if (marker) marker.setPopupContent('<b>📍 Lokasi Terpilih:</b><br>' + address).openPopup();
+          var address = parts.length >= 2 ? parts.join(', ') : (data.display_name || ('Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6)));
+          applyAddressResult(lat, lng, address);
         })
-        .catch(function () { if (mapAddressInput) mapAddressInput.value = 'Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6); });
+        .catch(function () {
+          var fallback = 'Koordinat: ' + lat.toFixed(6) + ', ' + lng.toFixed(6);
+          applyAddressResult(lat, lng, fallback);
+        });
     }
+
+    function applyAddressResult(lat, lng, address) {
+      lastValidLat = lat; lastValidLng = lng; currentLat = lat; currentLng = lng; hasSelectedLocation = true;
+      if (latInput) latInput.value = lat.toFixed(7);
+      if (lngInput) lngInput.value = lng.toFixed(7);
+      if (mapAddressInput) mapAddressInput.value = address;
+      if (marker) marker.setPopupContent('<b>📍 Lokasi Terpilih:</b><br>' + address).openPopup();
+    }
+
+
 
 
     function revertToLastValidLocation() {

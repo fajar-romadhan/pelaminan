@@ -212,8 +212,8 @@ window.SHIPPING_RATES = <?= json_encode(
         <input type="hidden" name="delivery_longitude" id="delivery_longitude" value="<?= e($_POST['delivery_longitude'] ?? '') ?>">
         
         <div class="form-group">
-          <label>Alamat Hasil Peta</label>
-          <input class="input" name="delivery_map_address" id="delivery_map_address" value="<?= e($_POST['delivery_map_address'] ?? '') ?>" placeholder="Klik titik pada peta untuk mendapatkan alamat otomatis" readonly required>
+          <label>Alamat Hasil Peta <span class="muted" style="font-size:12.5px;font-weight:normal;">(Terisi otomatis dari peta/GPS, dapat dilengkapi no. rumah/RT/RW)</span></label>
+          <input class="input" name="delivery_map_address" id="delivery_map_address" value="<?= e($_POST['delivery_map_address'] ?? '') ?>" placeholder="Klik titik pada peta atau Gunakan Lokasi Saya untuk mengisi otomatis" required>
         </div>
 
         <input type="hidden" name="delivery_distance_km" id="delivery_distance_km" value="<?= e($_POST['delivery_distance_km'] ?? '0') ?>">
